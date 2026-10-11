@@ -6,7 +6,8 @@ import {
   CheckCircle2, 
   Circle, 
   Zap, 
-  Menu 
+  Menu,
+  Sparkles 
 } from 'lucide-react';
 
 interface TopHeaderProps {
@@ -18,6 +19,7 @@ interface TopHeaderProps {
   onNext: () => void;
   onToggleDone: () => void;
   onOpenFlashcards: () => void;
+  onOpenQuizlet: () => void;
   onOpenMobileMenu: () => void;
 }
 
@@ -30,6 +32,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   onNext,
   onToggleDone,
   onOpenFlashcards,
+  onOpenQuizlet,
   onOpenMobileMenu,
 }) => {
   return (
@@ -73,6 +76,20 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
 
       <div className="top-header-right">
         <button 
+          className="btn-action" 
+          onClick={onOpenQuizlet}
+          title="Mở tổng hợp tất cả link Quizlet toàn khóa"
+          style={{ 
+            borderColor: 'rgba(99, 102, 241, 0.4)', 
+            background: 'rgba(99, 102, 241, 0.1)', 
+            color: '#818cf8' 
+          }}
+        >
+          <Sparkles size={14} />
+          <span>Kho Quizlet</span>
+        </button>
+
+        <button 
           className={`btn-action btn-done-toggle ${isDone ? 'active' : ''}`}
           onClick={onToggleDone}
         >
@@ -85,7 +102,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           onClick={onOpenFlashcards}
           title="Ôn tập nhanh với Flashcards"
         >
-          <Zap size={15} color="var(--accent-amber)" />
+          <Zap size={14} color="var(--accent-amber)" />
           <span>Flashcards</span>
         </button>
       </div>

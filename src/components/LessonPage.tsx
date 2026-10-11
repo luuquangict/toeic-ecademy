@@ -22,7 +22,10 @@ interface LessonPageProps {
   nextLesson: Lesson | null;
   onGoPrev: () => void;
   onGoNext: () => void;
+  onOpenQuizlet: () => void;
 }
+
+const STORAGE_KEY_TASKS = 'toeic_prep_completed_tasks';
 
 export const LessonPage: React.FC<LessonPageProps> = ({
   lesson,
@@ -30,21 +33,40 @@ export const LessonPage: React.FC<LessonPageProps> = ({
   nextLesson,
   onGoPrev,
   onGoNext,
+  onOpenQuizlet,
 }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'core' | 'tips' | 'hw'>('all');
-  const [checkedTasks, setCheckedTasks] = useState<Record<string, boolean>>({});
+  const [checkedTasks, setCheckedTasks] = useState<Record<string, boolean>>(() => {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY_TASKS) || '{}');
+    } catch {
+      return {};
+    }
+  });
 
   const toggleTask = (taskId: string) => {
-    setCheckedTasks((prev) => ({
-      ...prev,
-      [taskId]: !prev[taskId],
-    }));
+    setCheckedTasks((prev) => {
+      const updated = {
+        ...prev,
+        [taskId]: !prev[taskId],
+      };
+      localStorage.setItem(STORAGE_KEY_TASKS, JSON.stringify(updated));
+      return updated;
+    });
   };
 
   return (
     <div className="page-content-wrapper">
       {/* Quick Global Links Strip */}
       <div className="quick-links-strip">
+        <button
+          onClick={onOpenQuizlet}
+          className="quick-link-pill"
+          style={{ cursor: 'pointer', borderColor: 'rgba(99, 102, 241, 0.4)', color: '#818cf8' }}
+        >
+          <Sparkles size={13} color="#818cf8" />
+          <span style={{ fontWeight: 700 }}>Tổng Hợp Link Quizlet (Tất cả buổi)</span>
+        </button>
         <a 
           href="https://drive.google.com/drive/folders/1YO0Zd4rwRlrbbLR3OIeROkAl8w6k5_-7?usp=sharing" 
           target="_blank" 

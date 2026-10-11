@@ -4,6 +4,7 @@ import { Sidebar } from './components/Sidebar';
 import { TopHeader } from './components/TopHeader';
 import { LessonPage } from './components/LessonPage';
 import { FlashcardModal } from './components/FlashcardModal';
+import { QuizletModal } from './components/QuizletModal';
 
 const STORAGE_KEY_DONE = 'toeic_prep_completed_list';
 const STORAGE_KEY_THEME = 'toeic_prep_theme';
@@ -26,6 +27,7 @@ export function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFlashcardOpen, setIsFlashcardOpen] = useState(false);
+  const [isQuizletOpen, setIsQuizletOpen] = useState(false);
 
   // Apply Theme
   useEffect(() => {
@@ -109,6 +111,7 @@ export function App() {
         onSearchChange={setSearchQuery}
         onToggleTheme={handleToggleTheme}
         onCloseMobile={() => setIsSidebarOpen(false)}
+        onOpenQuizlet={() => setIsQuizletOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -122,6 +125,7 @@ export function App() {
           onNext={() => setCurrentIndex((prev) => Math.min(lessonsData.length - 1, prev + 1))}
           onToggleDone={handleToggleDone}
           onOpenFlashcards={() => setIsFlashcardOpen(true)}
+          onOpenQuizlet={() => setIsQuizletOpen(true)}
           onOpenMobileMenu={() => setIsSidebarOpen(true)}
         />
 
@@ -132,6 +136,7 @@ export function App() {
           nextLesson={nextLesson}
           onGoPrev={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
           onGoNext={() => setCurrentIndex((prev) => Math.min(lessonsData.length - 1, prev + 1))}
+          onOpenQuizlet={() => setIsQuizletOpen(true)}
         />
       </main>
 
@@ -140,6 +145,12 @@ export function App() {
         cards={flashcardsData}
         isOpen={isFlashcardOpen}
         onClose={() => setIsFlashcardOpen(false)}
+      />
+
+      {/* Central Quizlet Hub Modal */}
+      <QuizletModal
+        isOpen={isQuizletOpen}
+        onClose={() => setIsQuizletOpen(false)}
       />
     </div>
   );

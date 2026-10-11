@@ -10,7 +10,8 @@ import {
   Search, 
   Moon, 
   Sun,
-  X
+  X,
+  Sparkles
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -26,6 +27,7 @@ interface SidebarProps {
   onSearchChange: (query: string) => void;
   onToggleTheme: () => void;
   onCloseMobile: () => void;
+  onOpenQuizlet: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -41,6 +43,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onSearchChange,
   onToggleTheme,
   onCloseMobile,
+  onOpenQuizlet,
 }) => {
   const completedCount = completedList.length;
   const totalCount = lessons.length;
@@ -104,6 +107,46 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="progress-fill" style={{ width: `${progressPct}%` }} />
           </div>
         </div>
+      </div>
+
+      {/* Direct Quizlet Hub Banner */}
+      <div style={{ padding: '10px 14px 4px' }}>
+        <button
+          onClick={() => {
+            onOpenQuizlet();
+            onCloseMobile();
+          }}
+          style={{
+            width: '100%',
+            background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(6, 182, 212, 0.12))',
+            border: '1px solid rgba(99, 102, 241, 0.35)',
+            borderRadius: '10px',
+            padding: '10px 12px',
+            color: '#a5b4fc',
+            fontSize: '12.5px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            transition: 'all 0.2s ease',
+          }}
+          title="Bấm để mở danh sách toàn bộ link Quizlet các buổi"
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Sparkles size={16} color="#818cf8" />
+            <span>Kho Link Quizlet (14+ Bộ)</span>
+          </div>
+          <span style={{ 
+            background: 'rgba(99, 102, 241, 0.25)', 
+            color: '#c7d2fe', 
+            fontSize: '10px', 
+            padding: '2px 6px', 
+            borderRadius: '4px' 
+          }}>
+            Tất cả buổi
+          </span>
+        </button>
       </div>
 
       {/* Search and Filters */}

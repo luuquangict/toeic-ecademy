@@ -52,8 +52,7 @@ export const lessonsData: Lesson[] = [
         "Student's Book: Chuẩn bị Lesson Preparation Unit 2 (trang 112, 113)"
       ],
       links: [
-        { name: "Quizlet Buổi 2 (Kiểm tra đầu giờ)", url: "https://quizlet.com/1194046606/flashcards?funnelUUID=661ad734-193e-4807-95f7-0cdbb0f13253", isQuizlet: true },
-        { name: "Blooket Vocab Buổi 2 (ID: 474952)", url: "https://play.blooket.com/play?id=474952" }
+        { name: "Quizlet Buổi 2 (Kiểm tra đầu giờ)", url: "https://quizlet.com/1194046606/flashcards?funnelUUID=661ad734-193e-4807-95f7-0cdbb0f13253", isQuizlet: true }
       ]
     }
   },
@@ -116,8 +115,7 @@ export const lessonsData: Lesson[] = [
         "Student's Book: Chuẩn bị Lesson Preparation Unit 3 Reading"
       ],
       links: [
-        { name: "Quizlet Buổi 3 (Adj & Adv)", url: "https://quizlet.com/vn/1192105919/toeic-pre-reading-2-adj-adv-flash-cards/?funnelUUID=ffe8a747-2c29-45d8-9cbe-b5d8358f35fb", isQuizlet: true },
-        { name: "Blooket Vocab Buổi 3 (ID: 558674)", url: "https://play.blooket.com/play?id=558674" }
+        { name: "Quizlet Buổi 3 (Adj & Adv)", url: "https://quizlet.com/vn/1192105919/toeic-pre-reading-2-adj-adv-flash-cards/?funnelUUID=ffe8a747-2c29-45d8-9cbe-b5d8358f35fb", isQuizlet: true }
       ]
     }
   },

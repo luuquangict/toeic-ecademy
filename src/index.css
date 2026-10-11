@@ -45,13 +45,62 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-family: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg-app);
   color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
   overflow-x: hidden;
+}
+
+/* Custom Dark & Light Scrollbar Styles */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) var(--bg-app);
+}
+
+[data-theme="light"] * {
+  scrollbar-color: rgba(0, 0, 0, 0.2) #f1f5f9;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.sidebar::-webkit-scrollbar-track,
+.nav-list::-webkit-scrollbar-track {
+  background: var(--bg-sidebar);
+}
+
+.main-area::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35);
 }
 
 /* App Layout */
@@ -746,7 +795,7 @@ body {
 
 .nav-dir-label {
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text-sub);
   text-transform: uppercase;
   margin-bottom: 4px;
@@ -754,8 +803,9 @@ body {
 
 .nav-dir-title {
   font-size: 13.5px;
-  font-weight: 800;
+  font-weight: 500;
   color: var(--text-main);
+  line-height: 1.4;
 }
 
 /* Flashcard Modal */
