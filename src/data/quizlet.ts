@@ -9,6 +9,13 @@ export const allQuizletList: QuizletItem[] = [
     url: "https://quizlet.com/133289919/600-tu-vung-toeic-flash-cards/?i=73nq5i&x=1jqt"
   },
   {
+    session: "Buổi 1",
+    type: "reading",
+    title: "Quizlet Reading 1 - Unit 1: Nouns & Pronouns",
+    topic: "Từ vựng Danh từ & Đại từ (Parts 5, 6, 7)",
+    url: "https://quizlet.com/1191486818/flashcards?funnelUUID=ede86e0e-c957-47fd-b128-14478ceb9ac8"
+  },
+  {
     session: "Buổi 2",
     type: "listening",
     title: "Quizlet Listening 1 - Unit 1: Part 1",

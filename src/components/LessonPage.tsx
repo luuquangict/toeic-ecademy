@@ -27,6 +27,33 @@ interface LessonPageProps {
 
 const STORAGE_KEY_TASKS = "toeic_prep_completed_tasks";
 
+const renderFormulaContent = (
+  content: string | string[],
+  type: "code" | "desc"
+) => {
+  const items = Array.isArray(content)
+    ? content
+    : content.includes("\n")
+      ? content.split("\n").map((line) => line.trim()).filter(Boolean)
+      : [content];
+
+  const className = type === "code" ? "formula-code" : "formula-desc";
+
+  if (items.length <= 1) {
+    return <div className={className}>{items[0] || ""}</div>;
+  }
+
+  return (
+    <div className={className}>
+      <ul className="formula-bullet-list">
+        {items.map((it, idx) => (
+          <li key={idx}>{it}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 export const LessonPage: React.FC<LessonPageProps> = ({
   lesson,
   prevLesson,
@@ -168,8 +195,8 @@ export const LessonPage: React.FC<LessonPageProps> = ({
                 <div style={{ fontWeight: 700, marginBottom: "4px" }}>
                   {item.title}
                 </div>
-                <div className="formula-code">{item.code}</div>
-                <div className="formula-desc">{item.desc}</div>
+                {renderFormulaContent(item.code, "code")}
+                {renderFormulaContent(item.desc, "desc")}
               </div>
             ))}
 

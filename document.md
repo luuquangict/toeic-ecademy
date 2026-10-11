@@ -1,4 +1,34 @@
+REVIEW BUỔI 1
+READING Unit 1: Parts 5, 6, 7 - Nouns & Pronouns
+Ở buổi 1, lớp mình đã đi được những nội dung sau:
+1. Chức năng của danh từ:
+- làm S (trước V)
+- làm O (sau V)
+- be + N
+- prep + N
 
+2. Vị trí của danh từ:
+- mạo từ + N
+- TTSH + N
+- (mạo từ) + adj + N
+
+3. Danh từ đếm được và không đếm được:
+- Đếm được: đi cùng a/an/the/many/...
+- Không đếm được: đi cùng the/much/a little...
+
+4. Đại từ:
+Xem bảng Đại từ trong Student's Book.
+
+HOMEWORK:
+A. Lớp mình về nhà hoàn thành 2 bài sau trên LMS (bắt buộc):
+1. HW_Pre Toeic_Reading 1_Unit 1_Part 5,6,7, - Nouns & Pronouns
+2. Vocabulary test - Pre Toeic - Reading 1 - Unit 1: Parts 5, 6, 7 - Nouns & Pronouns
+
+DEADLINE: nộp trước buổi học READING tiếp theo (thứ 6, 11/9)
+
+B. Bài tập bổ sung:
+1. Ôn từ vựng qua link Quizlet (buổi sau kiểm tra đầu giờ): https://quizlet.com/1191486818/flashcards?funnelUUID=ede86e0e-c957-47fd-b128-14478ceb9ac8
+2. Làm trước phần Lesson Preparation của Unit 2 trong Student's Book (trang 16,17)
 
 REVIEW BUỔI 2
 LISTENING Unit 1: Part 1 - Photos of People

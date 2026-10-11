@@ -35,8 +35,12 @@ Tuân thủ đúng kiểu dữ liệu trong `src/types.ts`:
   core: [
     {
       title: "[Tên cấu trúc / thì / quy tắc]",
-      code: "[Công thức ngắn gọn]",
-      desc: "[Giải thích và ví dụ cụ thể]"
+      // code và desc có thể là string (1 dòng in thẳng) hoặc string[] (mỗi item 1 dòng, >= 2 dòng tự động có bullet)
+      code: [
+        "[Công thức dòng 1]",
+        "[Công thức dòng 2]"
+      ],
+      desc: "[Giải thích hoặc mảng các ý giải thích]"
     }
   ],
   grids: [

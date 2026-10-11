@@ -1,7 +1,7 @@
 export interface CorePoint {
   title: string;
-  code: string;
-  desc: string;
+  code: string | string[];
+  desc: string | string[];
 }
 
 export interface CardGrid {
