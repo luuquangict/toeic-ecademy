@@ -30,6 +30,8 @@ interface SidebarProps {
   onCloseMobile: () => void;
   onOpenQuizlet: () => void;
   onOpenFlashcards: () => void;
+  activePage?: "lessons" | "audio";
+  onNavigateAudio: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -47,6 +49,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onCloseMobile,
   onOpenQuizlet,
   onOpenFlashcards,
+  activePage,
+  onNavigateAudio,
 }) => {
   const completedCount = completedList.length;
   const totalCount = lessons.length;
@@ -205,6 +209,53 @@ export const Sidebar: React.FC<SidebarProps> = ({
             }}
           >
             10 Thẻ
+          </span>
+        </button>
+
+        <button
+          onClick={() => {
+            onNavigateAudio();
+            onCloseMobile();
+          }}
+          style={{
+            width: "100%",
+            background:
+              activePage === "audio"
+                ? "linear-gradient(135deg, rgba(6, 182, 212, 0.28), rgba(2, 132, 199, 0.28))"
+                : "linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(2, 132, 199, 0.12))",
+            border:
+              activePage === "audio"
+                ? "1px solid var(--accent-cyan)"
+                : "1px solid rgba(6, 182, 212, 0.35)",
+            borderRadius: "10px",
+            padding: "10px 12px",
+            color: "#67e8f9",
+            fontSize: "12.5px",
+            fontWeight: 700,
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            transition: "all 0.2s ease",
+            boxShadow:
+              activePage === "audio" ? "0 0 12px rgba(6, 182, 212, 0.25)" : "none",
+          }}
+          title="Mở trang nghe 115 Audio Tracks sách TOEIC Preparation"
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <Headphones size={16} color="#06b6d4" />
+            <span>Kho Audio Sách Prep</span>
+          </div>
+          <span
+            style={{
+              background: "rgba(6, 182, 212, 0.25)",
+              color: "#a5f3fc",
+              fontSize: "10px",
+              padding: "2px 6px",
+              borderRadius: "4px",
+            }}
+          >
+            115 Track
           </span>
         </button>
       </div>

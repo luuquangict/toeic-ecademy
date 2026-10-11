@@ -5,11 +5,13 @@ import { TopHeader } from './components/TopHeader';
 import { LessonPage } from './components/LessonPage';
 import { FlashcardModal } from './components/FlashcardModal';
 import { QuizletModal } from './components/QuizletModal';
+import { AudioPage } from './components/AudioPage';
 
 const STORAGE_KEY_DONE = 'toeic_prep_completed_list';
 const STORAGE_KEY_THEME = 'toeic_prep_theme';
 
 export function App() {
+  const [activePage, setActivePage] = useState<'lessons' | 'audio'>('lessons');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completedList, setCompletedList] = useState<string[]>(() => {
     try {
@@ -44,28 +46,46 @@ export function App() {
     localStorage.setItem(STORAGE_KEY_DONE, JSON.stringify(completedList));
   }, [completedList]);
 
-  // Sync hash routing on load
+  // Sync hash routing on load and hash change
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (hash) {
-      const foundIdx = lessonsData.findIndex((l) => l.id === hash);
-      if (foundIdx !== -1) {
-        setCurrentIndex(foundIdx);
+    const handleHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'audio') {
+        setActivePage('audio');
+      } else {
+        setActivePage('lessons');
+        if (hash) {
+          const foundIdx = lessonsData.findIndex((l) => l.id === hash);
+          if (foundIdx !== -1) {
+            setCurrentIndex(foundIdx);
+          }
+        }
       }
-    }
+    };
+
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
-  // Update hash when index changes
+  // Update hash when index or activePage changes
   useEffect(() => {
-    const current = lessonsData[currentIndex];
-    if (current) {
-      window.location.hash = current.id;
+    if (activePage === 'audio') {
+      if (window.location.hash !== '#audio') {
+        window.location.hash = 'audio';
+      }
+    } else {
+      const current = lessonsData[currentIndex];
+      if (current && window.location.hash !== `#${current.id}`) {
+        window.location.hash = current.id;
+      }
     }
-  }, [currentIndex]);
+  }, [currentIndex, activePage]);
 
-  // Keyboard Navigation (Left / Right Arrow)
+  // Keyboard Navigation (Left / Right Arrow) - Only on lessons page
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (activePage !== 'lessons') return;
       if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
       if (e.key === 'ArrowLeft') {
         setCurrentIndex((prev) => Math.max(0, prev - 1));
@@ -76,7 +96,7 @@ export function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [activePage]);
 
   const currentLesson = lessonsData[currentIndex];
   const prevLesson = currentIndex > 0 ? lessonsData[currentIndex - 1] : null;
@@ -95,6 +115,22 @@ export function App() {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
+  const handleGoToLessons = (lessonIndex?: number) => {
+    if (typeof lessonIndex === 'number') {
+      setCurrentIndex(lessonIndex);
+    }
+    setActivePage('lessons');
+    const targetLesson = typeof lessonIndex === 'number' ? lessonsData[lessonIndex] : currentLesson;
+    if (targetLesson) {
+      window.location.hash = targetLesson.id;
+    }
+  };
+
+  const handleGoToAudio = () => {
+    setActivePage('audio');
+    window.location.hash = 'audio';
+  };
+
   return (
     <div className="app-layout">
       {/* Sidebar */}
@@ -106,13 +142,15 @@ export function App() {
         searchQuery={searchQuery}
         theme={theme}
         isOpen={isSidebarOpen}
-        onSelectLesson={(idx) => setCurrentIndex(idx)}
+        activePage={activePage}
+        onSelectLesson={(idx) => handleGoToLessons(idx)}
         onFilterChange={setCurrentFilter}
         onSearchChange={setSearchQuery}
         onToggleTheme={handleToggleTheme}
         onCloseMobile={() => setIsSidebarOpen(false)}
         onOpenQuizlet={() => setIsQuizletOpen(true)}
         onOpenFlashcards={() => setIsFlashcardOpen(true)}
+        onNavigateAudio={handleGoToAudio}
       />
 
       {/* Mobile Sidebar Backdrop Overlay */}
@@ -125,22 +163,29 @@ export function App() {
 
       {/* Main Content Area */}
       <main className="main-area">
-        <TopHeader
-          currentLesson={currentLesson}
-          isDone={isDone}
-          onToggleDone={handleToggleDone}
-          onOpenMobileMenu={() => setIsSidebarOpen(true)}
-        />
+        {activePage === 'audio' ? (
+          <AudioPage onBackToLessons={() => handleGoToLessons()} />
+        ) : (
+          <>
+            <TopHeader
+              currentLesson={currentLesson}
+              isDone={isDone}
+              onToggleDone={handleToggleDone}
+              onOpenMobileMenu={() => setIsSidebarOpen(true)}
+            />
 
-        <LessonPage
-          key={currentLesson.id}
-          lesson={currentLesson}
-          prevLesson={prevLesson}
-          nextLesson={nextLesson}
-          onGoPrev={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
-          onGoNext={() => setCurrentIndex((prev) => Math.min(lessonsData.length - 1, prev + 1))}
-          onOpenQuizlet={() => setIsQuizletOpen(true)}
-        />
+            <LessonPage
+              key={currentLesson.id}
+              lesson={currentLesson}
+              prevLesson={prevLesson}
+              nextLesson={nextLesson}
+              onGoPrev={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
+              onGoNext={() => setCurrentIndex((prev) => Math.min(lessonsData.length - 1, prev + 1))}
+              onOpenQuizlet={() => setIsQuizletOpen(true)}
+              onOpenAudioPage={handleGoToAudio}
+            />
+          </>
+        )}
       </main>
 
       {/* Flashcard Quiz Modal */}

@@ -14,6 +14,7 @@ import {
   AlertTriangle,
   Sparkles,
   Link as LinkIcon,
+  Headphones,
 } from "lucide-react";
 
 interface LessonPageProps {
@@ -23,6 +24,7 @@ interface LessonPageProps {
   onGoPrev: () => void;
   onGoNext: () => void;
   onOpenQuizlet: () => void;
+  onOpenAudioPage?: () => void;
 }
 
 const STORAGE_KEY_TASKS = "toeic_prep_completed_tasks";
@@ -61,6 +63,7 @@ export const LessonPage: React.FC<LessonPageProps> = ({
   onGoPrev,
   onGoNext,
   onOpenQuizlet,
+  onOpenAudioPage,
 }) => {
   const [activeTab, setActiveTab] = useState<"all" | "core" | "tips" | "hw">(
     "all",
@@ -126,6 +129,22 @@ export const LessonPage: React.FC<LessonPageProps> = ({
           <BookCheck size={13} />
           <span>Parroto Thi Thử</span>
         </a>
+        {onOpenAudioPage && (
+          <button
+            onClick={onOpenAudioPage}
+            className="quick-link-pill"
+            style={{
+              cursor: "pointer",
+              border: "1px solid rgba(6, 182, 212, 0.4)",
+              background: "rgba(6, 182, 212, 0.12)",
+              color: "var(--accent-cyan)",
+              fontWeight: 600,
+            }}
+          >
+            <Headphones size={13} color="var(--accent-cyan)" />
+            <span>Nghe 115 Audio Online</span>
+          </button>
+        )}
       </div>
 
       {/* Lesson Hero Banner */}
