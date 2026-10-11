@@ -38,15 +38,18 @@
   --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html {
-  overflow-x: hidden;
+html, body {
+  width: 100%;
   max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 body {
@@ -56,10 +59,15 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   min-height: 100dvh;
-  display: flex;
-  overflow-x: hidden;
+}
+
+#root {
   width: 100%;
   max-width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Custom Dark & Light Scrollbar Styles */
@@ -116,6 +124,7 @@ body {
   display: flex;
   width: 100%;
   max-width: 100%;
+  flex: 1;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
@@ -350,12 +359,11 @@ body {
 
 /* Main Area */
 .main-area {
-  flex: 1;
+  flex: 1 1 0%;
   min-width: 0;
   width: 100%;
   max-width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
@@ -372,7 +380,10 @@ body {
   background: var(--bg-card);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
-  padding: 12px 24px;
+  padding: 12px 20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -456,8 +467,9 @@ body {
 .page-content-wrapper {
   max-width: 960px;
   width: 100%;
+  min-width: 0;
   margin: 0 auto;
-  padding: 24px 24px 60px;
+  padding: 24px 20px 60px;
   animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -471,6 +483,9 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   margin-bottom: 20px;
   padding-bottom: 14px;
   border-bottom: 1px solid var(--border-color);
@@ -482,13 +497,14 @@ body {
   color: var(--text-muted);
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  padding: 5px 12px;
+  padding: 8px 12px;
   border-radius: 999px;
   text-decoration: none;
   transition: var(--transition);
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  max-width: 100%;
 }
 
 .quick-link-pill:hover {
@@ -504,6 +520,9 @@ body {
   padding: 22px 26px;
   margin-bottom: 22px;
   box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .lesson-meta {
@@ -531,11 +550,15 @@ body {
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-bottom: 6px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .lesson-desc-sub {
   font-size: 13.5px;
   color: var(--text-muted);
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* Sub-Tabs Inside Lesson */
@@ -546,13 +569,17 @@ body {
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 12px;
   overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .lesson-tab-btn {
   background: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-muted);
-  padding: 7px 14px;
+  padding: 8px 14px;
   border-radius: var(--radius-sm);
   font-size: 12.5px;
   font-weight: 700;
@@ -578,6 +605,9 @@ body {
   padding: 22px 24px;
   margin-bottom: 18px;
   box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .section-title {
@@ -603,6 +633,9 @@ body {
   border-radius: var(--radius-sm);
   padding: 14px 16px;
   margin-bottom: 10px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .formula-code {
@@ -1064,6 +1097,51 @@ body {
     border-radius: var(--radius-md);
     width: 95%;
   }
+
+  /* Quizlet Modal Mobile Card Layout (Replaces cramped 3-column row) */
+  .quizlet-filter-bar {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quizlet-filter-bar .search-input-wrapper {
+    min-width: 100% !important;
+  }
+
+  .quizlet-filter-bar .filter-chips {
+    width: 100%;
+  }
+
+  .quizlet-item-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 12px;
+  }
+
+  .quizlet-item-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .quizlet-item-info {
+    width: 100%;
+  }
+
+  .quizlet-item-actions {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .quizlet-item-actions .btn-action {
+    flex: 1;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 520px) {
@@ -1082,4 +1160,113 @@ body {
   .btn-action {
     padding: 6px 8px;
   }
+}
+
+/* Quizlet Modal & Item Cards Base Styles */
+.quizlet-filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.quizlet-list-container {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 4px;
+}
+
+.quizlet-item-card {
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  transition: var(--transition);
+}
+
+.quizlet-item-card:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.quizlet-item-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.quizlet-item-badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.quizlet-item-badge.listening {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+.quizlet-item-badge.reading {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.quizlet-item-badge.global {
+  background: rgba(139, 92, 246, 0.15);
+  color: #c084fc;
+}
+
+.quizlet-item-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.quizlet-item-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  word-break: break-word;
+}
+
+.quizlet-item-topic {
+  font-size: 12px;
+  color: var(--text-sub);
+  word-break: break-word;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.quizlet-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-open-quizlet {
+  padding: 6px 12px;
+  font-size: 11.5px;
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  color: #fff;
+  border-color: #4f46e5;
+}
+
+.btn-open-quizlet:hover {
+  background: linear-gradient(135deg, #4338ca, #3730a3);
+  color: #fff;
 }

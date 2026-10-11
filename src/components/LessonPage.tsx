@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { Lesson } from '../types';
-import { 
-  FolderOpen, 
-  Award, 
-  ExternalLink, 
-  BookOpen, 
-  Lightbulb, 
-  Clock, 
-  CheckSquare, 
-  ArrowLeft, 
+import React, { useState } from "react";
+import { Lesson } from "../types";
+import {
+  FolderOpen,
+  Award,
+  ExternalLink,
+  BookOpen,
+  Lightbulb,
+  Clock,
+  CheckSquare,
+  ArrowLeft,
   ArrowRight,
   BookCheck,
   AlertTriangle,
   Sparkles,
-  Link as LinkIcon
-} from 'lucide-react';
+  Link as LinkIcon,
+} from "lucide-react";
 
 interface LessonPageProps {
   lesson: Lesson;
@@ -25,7 +25,7 @@ interface LessonPageProps {
   onOpenQuizlet: () => void;
 }
 
-const STORAGE_KEY_TASKS = 'toeic_prep_completed_tasks';
+const STORAGE_KEY_TASKS = "toeic_prep_completed_tasks";
 
 export const LessonPage: React.FC<LessonPageProps> = ({
   lesson,
@@ -35,14 +35,18 @@ export const LessonPage: React.FC<LessonPageProps> = ({
   onGoNext,
   onOpenQuizlet,
 }) => {
-  const [activeTab, setActiveTab] = useState<'all' | 'core' | 'tips' | 'hw'>('all');
-  const [checkedTasks, setCheckedTasks] = useState<Record<string, boolean>>(() => {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY_TASKS) || '{}');
-    } catch {
-      return {};
-    }
-  });
+  const [activeTab, setActiveTab] = useState<"all" | "core" | "tips" | "hw">(
+    "all",
+  );
+  const [checkedTasks, setCheckedTasks] = useState<Record<string, boolean>>(
+    () => {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY_TASKS) || "{}");
+      } catch {
+        return {};
+      }
+    },
+  );
 
   const toggleTask = (taskId: string) => {
     setCheckedTasks((prev) => {
@@ -59,45 +63,37 @@ export const LessonPage: React.FC<LessonPageProps> = ({
     <div className="page-content-wrapper">
       {/* Quick Global Links Strip */}
       <div className="quick-links-strip">
-        <button
-          onClick={onOpenQuizlet}
-          className="quick-link-pill"
-          style={{ cursor: 'pointer', borderColor: 'rgba(99, 102, 241, 0.4)', color: '#818cf8' }}
-        >
-          <Sparkles size={13} color="#818cf8" />
-          <span style={{ fontWeight: 700 }}>Tổng Hợp Link Quizlet (Tất cả buổi)</span>
-        </button>
-        <a 
-          href="https://drive.google.com/drive/folders/1YO0Zd4rwRlrbbLR3OIeROkAl8w6k5_-7?usp=sharing" 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <a
+          href="https://drive.google.com/drive/folders/1YO0Zd4rwRlrbbLR3OIeROkAl8w6k5_-7?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
           className="quick-link-pill"
         >
           <FolderOpen size={13} />
           <span>Drive Sách & Audio Lớp</span>
         </a>
-        <a 
-          href="https://drive.google.com/drive/folders/1Ho_72oIdKIAmbuGgvOp69bo5sB-XMG9I?usp=sharing" 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <a
+          href="https://drive.google.com/drive/folders/1Ho_72oIdKIAmbuGgvOp69bo5sB-XMG9I?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
           className="quick-link-pill"
         >
           <Award size={13} color="var(--accent-amber)" />
           <span>Drive Đề Thi Giữa Kỳ</span>
         </a>
-        <a 
-          href="https://quizlet.com/133289919/600-tu-vung-toeic-flash-cards/?i=73nq5i&x=1jqt" 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <a
+          href="https://quizlet.com/133289919/600-tu-vung-toeic-flash-cards/?i=73nq5i&x=1jqt"
+          target="_blank"
+          rel="noopener noreferrer"
           className="quick-link-pill"
         >
           <Sparkles size={13} />
           <span>600 Từ Vựng TOEIC</span>
         </a>
-        <a 
-          href="https://parroto.app/vi/exams/toeic" 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <a
+          href="https://parroto.app/vi/exams/toeic"
+          target="_blank"
+          rel="noopener noreferrer"
           className="quick-link-pill"
         >
           <BookCheck size={13} />
@@ -108,10 +104,13 @@ export const LessonPage: React.FC<LessonPageProps> = ({
       {/* Lesson Hero Banner */}
       <div className="lesson-hero">
         <div className="lesson-meta">
-          <span 
+          <span
             className={`badge-tag ${
-              lesson.type === 'listening' ? 'badge-listening' : 
-              lesson.type === 'reading' ? 'badge-reading' : 'badge-midterm'
+              lesson.type === "listening"
+                ? "badge-listening"
+                : lesson.type === "reading"
+                  ? "badge-reading"
+                  : "badge-midterm"
             }`}
           >
             {lesson.badge}
@@ -123,33 +122,33 @@ export const LessonPage: React.FC<LessonPageProps> = ({
 
       {/* Internal Sub-Tabs */}
       <div className="lesson-tabs">
-        <button 
-          className={`lesson-tab-btn ${activeTab === 'all' ? 'active' : ''}`}
-          onClick={() => setActiveTab('all')}
+        <button
+          className={`lesson-tab-btn ${activeTab === "all" ? "active" : ""}`}
+          onClick={() => setActiveTab("all")}
         >
           Tất cả nội dung
         </button>
-        <button 
-          className={`lesson-tab-btn ${activeTab === 'core' ? 'active' : ''}`}
-          onClick={() => setActiveTab('core')}
+        <button
+          className={`lesson-tab-btn ${activeTab === "core" ? "active" : ""}`}
+          onClick={() => setActiveTab("core")}
         >
-          <BookOpen size={13} style={{ marginRight: '6px' }} />
+          <BookOpen size={13} style={{ marginRight: "6px" }} />
           Cốt lõi
         </button>
         {lesson.tips && lesson.tips.length > 0 && (
-          <button 
-            className={`lesson-tab-btn ${activeTab === 'tips' ? 'active' : ''}`}
-            onClick={() => setActiveTab('tips')}
+          <button
+            className={`lesson-tab-btn ${activeTab === "tips" ? "active" : ""}`}
+            onClick={() => setActiveTab("tips")}
           >
-            <Lightbulb size={13} style={{ marginRight: '6px' }} />
+            <Lightbulb size={13} style={{ marginRight: "6px" }} />
             Mẹo & Bẫy
           </button>
         )}
-        <button 
-          className={`lesson-tab-btn ${activeTab === 'hw' ? 'active' : ''}`}
-          onClick={() => setActiveTab('hw')}
+        <button
+          className={`lesson-tab-btn ${activeTab === "hw" ? "active" : ""}`}
+          onClick={() => setActiveTab("hw")}
         >
-          <CheckSquare size={13} style={{ marginRight: '6px' }} />
+          <CheckSquare size={13} style={{ marginRight: "6px" }} />
           Bài tập & Deadline
         </button>
       </div>
@@ -157,7 +156,7 @@ export const LessonPage: React.FC<LessonPageProps> = ({
       {/* Lesson Sections Container */}
       <div id="lessonContentSections">
         {/* Section 1: Core Knowledge */}
-        {(activeTab === 'all' || activeTab === 'core') && (
+        {(activeTab === "all" || activeTab === "core") && (
           <div className="content-section">
             <h3 className="section-title core">
               <BookOpen size={16} />
@@ -166,14 +165,16 @@ export const LessonPage: React.FC<LessonPageProps> = ({
 
             {lesson.core.map((item, idx) => (
               <div key={idx} className="formula-card">
-                <div style={{ fontWeight: 700, marginBottom: '4px' }}>{item.title}</div>
+                <div style={{ fontWeight: 700, marginBottom: "4px" }}>
+                  {item.title}
+                </div>
                 <div className="formula-code">{item.code}</div>
                 <div className="formula-desc">{item.desc}</div>
               </div>
             ))}
 
             {lesson.grids && (
-              <div className="card-grid" style={{ marginTop: '14px' }}>
+              <div className="card-grid" style={{ marginTop: "14px" }}>
                 {lesson.grids.map((grid, gIdx) => (
                   <div key={gIdx} className="sub-card">
                     <div className="sub-card-title">{grid.title}</div>
@@ -190,34 +191,38 @@ export const LessonPage: React.FC<LessonPageProps> = ({
         )}
 
         {/* Section 2: Tips & Traps */}
-        {(activeTab === 'all' || activeTab === 'tips') && lesson.tips && lesson.tips.length > 0 && (
-          <div className="content-section">
-            <h3 className="section-title tips">
-              <Lightbulb size={16} />
-              <span>Mẹo & Chiến Lược Làm Bài</span>
-            </h3>
+        {(activeTab === "all" || activeTab === "tips") &&
+          lesson.tips &&
+          lesson.tips.length > 0 && (
+            <div className="content-section">
+              <h3 className="section-title tips">
+                <Lightbulb size={16} />
+                <span>Mẹo & Chiến Lược Làm Bài</span>
+              </h3>
 
-            {lesson.tips.map((tip, tIdx) => {
-              const isTrap = tip.tag.includes('BẪY');
-              return (
-                <div key={tIdx} className="callout">
-                  <div className="callout-header">
-                    {isTrap ? (
-                      <AlertTriangle size={14} color="var(--accent-rose)" />
-                    ) : (
-                      <Sparkles size={14} color="var(--accent-emerald)" />
-                    )}
-                    <span className={isTrap ? 'tag-wrong' : 'tag-correct'}>{tip.tag}</span>
+              {lesson.tips.map((tip, tIdx) => {
+                const isTrap = tip.tag.includes("BẪY");
+                return (
+                  <div key={tIdx} className="callout">
+                    <div className="callout-header">
+                      {isTrap ? (
+                        <AlertTriangle size={14} color="var(--accent-rose)" />
+                      ) : (
+                        <Sparkles size={14} color="var(--accent-emerald)" />
+                      )}
+                      <span className={isTrap ? "tag-wrong" : "tag-correct"}>
+                        {tip.tag}
+                      </span>
+                    </div>
+                    <div>{tip.text}</div>
                   </div>
-                  <div>{tip.text}</div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                );
+              })}
+            </div>
+          )}
 
         {/* Section 3: Homework & Deadlines */}
-        {(activeTab === 'all' || activeTab === 'hw') && (
+        {(activeTab === "all" || activeTab === "hw") && (
           <div className="content-section">
             <h3 className="section-title hw">
               <CheckSquare size={16} />
@@ -235,11 +240,11 @@ export const LessonPage: React.FC<LessonPageProps> = ({
                 const isChecked = !!checkedTasks[taskId];
 
                 return (
-                  <li 
-                    key={idx} 
-                    className="hw-item" 
+                  <li
+                    key={idx}
+                    className="hw-item"
                     onClick={() => toggleTask(taskId)}
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: "pointer" }}
                   >
                     <input
                       type="checkbox"
@@ -247,11 +252,11 @@ export const LessonPage: React.FC<LessonPageProps> = ({
                       checked={isChecked}
                       onChange={() => toggleTask(taskId)}
                     />
-                    <span 
-                      style={{ 
-                        textDecoration: isChecked ? 'line-through' : 'none',
+                    <span
+                      style={{
+                        textDecoration: isChecked ? "line-through" : "none",
                         opacity: isChecked ? 0.6 : 1,
-                        flex: 1 
+                        flex: 1,
                       }}
                     >
                       {task}
@@ -268,7 +273,7 @@ export const LessonPage: React.FC<LessonPageProps> = ({
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`btn-link ${link.isQuizlet ? 'quizlet' : ''}`}
+                  className={`btn-link ${link.isQuizlet ? "quizlet" : ""}`}
                 >
                   <LinkIcon size={13} />
                   <span>{link.name}</span>
@@ -288,13 +293,16 @@ export const LessonPage: React.FC<LessonPageProps> = ({
           onClick={onGoPrev}
         >
           <span className="nav-dir-label">
-            <ArrowLeft size={12} style={{ display: 'inline', marginRight: '4px' }} />
+            <ArrowLeft
+              size={12}
+              style={{ display: "inline", marginRight: "4px" }}
+            />
             Buổi Trước
           </span>
           <span className="nav-dir-title">
-            {prevLesson 
-              ? `${typeof prevLesson.sessionNum === 'number' ? 'Buổi ' + prevLesson.sessionNum : 'Đề Giữa Kỳ'}: ${(prevLesson.title.split(':')[1] || prevLesson.title).trim()}`
-              : 'Hết bài trước'}
+            {prevLesson
+              ? `${typeof prevLesson.sessionNum === "number" ? "Buổi " + prevLesson.sessionNum : "Đề Giữa Kỳ"}: ${(prevLesson.title.split(":")[1] || prevLesson.title).trim()}`
+              : "Hết bài trước"}
           </span>
         </button>
 
@@ -305,12 +313,15 @@ export const LessonPage: React.FC<LessonPageProps> = ({
         >
           <span className="nav-dir-label">
             Buổi Tiếp Theo
-            <ArrowRight size={12} style={{ display: 'inline', marginLeft: '4px' }} />
+            <ArrowRight
+              size={12}
+              style={{ display: "inline", marginLeft: "4px" }}
+            />
           </span>
           <span className="nav-dir-title">
             {nextLesson
-              ? `${typeof nextLesson.sessionNum === 'number' ? 'Buổi ' + nextLesson.sessionNum : 'Đề Giữa Kỳ'}: ${(nextLesson.title.split(':')[1] || nextLesson.title).trim()}`
-              : 'Đã hết bài học'}
+              ? `${typeof nextLesson.sessionNum === "number" ? "Buổi " + nextLesson.sessionNum : "Đề Giữa Kỳ"}: ${(nextLesson.title.split(":")[1] || nextLesson.title).trim()}`
+              : "Đã hết bài học"}
           </span>
         </button>
       </div>

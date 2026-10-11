@@ -85,8 +85,8 @@ export const QuizletModal: React.FC<QuizletModalProps> = ({ isOpen, onClose }) =
         </div>
 
         {/* Filter Bar */}
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
-          <div className="search-input-wrapper" style={{ flex: 1, minWidth: '220px' }}>
+        <div className="quizlet-filter-bar">
+          <div className="search-input-wrapper" style={{ flex: 1, minWidth: '200px' }}>
             <Search size={14} className="search-icon" />
             <input
               type="text"
@@ -97,7 +97,7 @@ export const QuizletModal: React.FC<QuizletModalProps> = ({ isOpen, onClose }) =
             />
           </div>
 
-          <div className="filter-chips" style={{ minWidth: '220px' }}>
+          <div className="filter-chips">
             <button
               className={`chip-btn ${filterType === 'all' ? 'active' : ''}`}
               onClick={() => setFilterType('all')}
@@ -120,77 +120,44 @@ export const QuizletModal: React.FC<QuizletModalProps> = ({ isOpen, onClose }) =
         </div>
 
         {/* Scrollable list */}
-        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px', paddingRight: '4px' }}>
+        <div className="quizlet-list-container">
           {filteredItems.map((item, idx) => {
             const isCopied = copiedUrl === item.url;
             return (
-              <div 
-                key={idx}
-                style={{
-                  background: 'var(--bg-card-sub)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '10px',
-                  padding: '12px 16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '14px'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
-                  <div style={{
-                    fontSize: '11px',
-                    fontWeight: 800,
-                    padding: '3px 8px',
-                    borderRadius: '6px',
-                    whiteSpace: 'nowrap',
-                    background: item.type === 'listening' ? 'rgba(59, 130, 246, 0.15)' :
-                                item.type === 'reading' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(139, 92, 246, 0.15)',
-                    color: item.type === 'listening' ? '#60a5fa' :
-                           item.type === 'reading' ? '#34d399' : '#c084fc',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px'
-                  }}>
+              <div key={idx} className="quizlet-item-card">
+                <div className="quizlet-item-main">
+                  <div className={`quizlet-item-badge ${item.type}`}>
                     {item.type === 'listening' && <Headphones size={11} />}
                     {item.type === 'reading' && <BookOpen size={11} />}
                     {item.type === 'global' && <Sparkles size={11} />}
                     <span>{item.session}</span>
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text-main)' }}>
+                  <div className="quizlet-item-info">
+                    <div className="quizlet-item-title">
                       {item.title}
                     </div>
-                    <div style={{ fontSize: '12px', color: 'var(--text-sub)' }}>
+                    <div className="quizlet-item-topic">
                       {item.topic}
                     </div>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+                <div className="quizlet-item-actions">
                   <button
                     onClick={() => handleCopy(item.url)}
                     className="btn-action"
                     title="Sao chép link"
-                    style={{ padding: '6px 10px', fontSize: '11.5px' }}
                   >
                     {isCopied ? <Check size={13} color="var(--accent-emerald)" /> : <Copy size={13} />}
-                    <span>{isCopied ? 'Đã chép' : 'Chép'}</span>
+                    <span>{isCopied ? 'Đã chép' : 'Chép link'}</span>
                   </button>
 
                   <a
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-action"
-                    style={{ 
-                      padding: '6px 12px', 
-                      fontSize: '11.5px', 
-                      background: 'linear-gradient(135deg, #4f46e5, #4338ca)', 
-                      color: '#fff', 
-                      borderColor: '#4f46e5' 
-                    }}
+                    className="btn-action btn-open-quizlet"
                   >
                     <span>Mở ngay</span>
                     <ExternalLink size={12} />
