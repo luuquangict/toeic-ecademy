@@ -16,7 +16,7 @@ Nhiệm vụ của bạn là: **Đọc nội dung buổi học mới mà cô gi�
 
 ### 1. File cần cập nhật:
 1. `src/data/lessons.ts`: Thêm object buổi học mới vào mảng `lessonsData`.
-2. `src/components/QuizletModal.tsx`: Nếu buổi học có link Quizlet, thêm một mục vào mảng `allQuizletList`.
+2. `src/data/quizlet.ts`: Nếu buổi học có link Quizlet, thêm một mục vào mảng `allQuizletList`.
 3. `document.md`: Ghi chép nối tiếp nội dung gốc của cô giáo vào cuối file để lưu trữ raw data.
 
 ---
@@ -75,7 +75,7 @@ Tuân thủ đúng kiểu dữ liệu trong `src/types.ts`:
 
 ---
 
-### 3. Cập nhật vào `src/components/QuizletModal.tsx`:
+### 3. Cập nhật vào `src/data/quizlet.ts`:
 Nếu có link Quizlet mới, thêm vào mảng `allQuizletList`:
 ```typescript
 {

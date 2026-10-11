@@ -43,3 +43,11 @@ export interface Flashcard {
   q: string;
   a: string;
 }
+
+export interface QuizletItem {
+  session: string;
+  type: 'listening' | 'reading' | 'global';
+  title: string;
+  topic: string;
+  url: string;
+}
