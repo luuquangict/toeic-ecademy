@@ -112,20 +112,23 @@ export function App() {
         onToggleTheme={handleToggleTheme}
         onCloseMobile={() => setIsSidebarOpen(false)}
         onOpenQuizlet={() => setIsQuizletOpen(true)}
+        onOpenFlashcards={() => setIsFlashcardOpen(true)}
       />
+
+      {/* Mobile Sidebar Backdrop Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="sidebar-backdrop" 
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
       {/* Main Content Area */}
       <main className="main-area">
         <TopHeader
           currentLesson={currentLesson}
-          currentIndex={currentIndex}
-          totalLessons={lessonsData.length}
           isDone={isDone}
-          onPrev={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
-          onNext={() => setCurrentIndex((prev) => Math.min(lessonsData.length - 1, prev + 1))}
           onToggleDone={handleToggleDone}
-          onOpenFlashcards={() => setIsFlashcardOpen(true)}
-          onOpenQuizlet={() => setIsQuizletOpen(true)}
           onOpenMobileMenu={() => setIsSidebarOpen(true)}
         />
 

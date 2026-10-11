@@ -11,7 +11,8 @@ import {
   Moon, 
   Sun,
   X,
-  Sparkles
+  Sparkles,
+  Zap
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -28,6 +29,7 @@ interface SidebarProps {
   onToggleTheme: () => void;
   onCloseMobile: () => void;
   onOpenQuizlet: () => void;
+  onOpenFlashcards: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -44,6 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onToggleTheme,
   onCloseMobile,
   onOpenQuizlet,
+  onOpenFlashcards,
 }) => {
   const completedCount = completedList.length;
   const totalCount = lessons.length;
@@ -109,8 +112,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
 
-      {/* Direct Quizlet Hub Banner */}
-      <div style={{ padding: '10px 14px 4px' }}>
+      {/* Direct Hub Banners (Quizlet & Flashcards) */}
+      <div style={{ padding: '10px 14px 4px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <button
           onClick={() => {
             onOpenQuizlet();
@@ -145,6 +148,43 @@ export const Sidebar: React.FC<SidebarProps> = ({
             borderRadius: '4px' 
           }}>
             Tất cả buổi
+          </span>
+        </button>
+
+        <button
+          onClick={() => {
+            onOpenFlashcards();
+            onCloseMobile();
+          }}
+          style={{
+            width: '100%',
+            background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(234, 88, 12, 0.12))',
+            border: '1px solid rgba(245, 158, 11, 0.35)',
+            borderRadius: '10px',
+            padding: '10px 12px',
+            color: '#fbbf24',
+            fontSize: '12.5px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            transition: 'all 0.2s ease',
+          }}
+          title="Ôn tập nhanh với Flashcards các bẫy TOEIC kinh điển"
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Zap size={16} color="#f59e0b" />
+            <span>Ôn Tập Flashcards</span>
+          </div>
+          <span style={{ 
+            background: 'rgba(245, 158, 11, 0.25)', 
+            color: '#fde68a', 
+            fontSize: '10px', 
+            padding: '2px 6px', 
+            borderRadius: '4px' 
+          }}>
+            10 Thẻ
           </span>
         </button>
       </div>
