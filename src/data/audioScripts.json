@@ -1,0 +1,601 @@
+[
+  {
+    "key": "01_01",
+    "unit": 1,
+    "track": 1,
+    "fileName": "01_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 1,
+    "partTitle": "Part 1: Photographs",
+    "topic": "Human Actions - Gardening & Planting",
+    "duration": 56.35,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "Intro",
+        "text": "Part 1. Photo Descriptions. Unit 1. Practice. Number 1.",
+        "start": 22.5,
+        "end": 36.2
+      },
+      {
+        "id": 2,
+        "label": "A",
+        "text": "A woman is wearing gloves.",
+        "start": 37.0,
+        "end": 40.5
+      },
+      {
+        "id": 3,
+        "label": "B",
+        "text": "A woman is using a shovel.",
+        "start": 41.0,
+        "end": 44.5
+      },
+      {
+        "id": 4,
+        "label": "C",
+        "text": "A woman is watering a plant.",
+        "start": 45.2,
+        "end": 48.8
+      },
+      {
+        "id": 5,
+        "label": "D",
+        "text": "A woman is arranging flowers.",
+        "start": 49.5,
+        "end": 53.2
+      }
+    ]
+  },
+  {
+    "key": "02_01",
+    "unit": 2,
+    "track": 1,
+    "fileName": "02_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 1,
+    "partTitle": "Part 1: Photographs",
+    "topic": "Objects & Interior Scene",
+    "duration": 28.24,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "Intro",
+        "text": "Unit 2. Photos of Objects. Practice. Number 1.",
+        "start": 0.28,
+        "end": 8.5
+      },
+      {
+        "id": 2,
+        "label": "A",
+        "text": "The curtains are closed.",
+        "start": 9.7,
+        "end": 12.1
+      },
+      {
+        "id": 3,
+        "label": "B",
+        "text": "Lamps are standing on the floor.",
+        "start": 13.2,
+        "end": 16.2
+      },
+      {
+        "id": 4,
+        "label": "C",
+        "text": "A table is surrounded by chairs.",
+        "start": 17.4,
+        "end": 20.6
+      },
+      {
+        "id": 5,
+        "label": "D",
+        "text": "Some pictures are being hung on the wall.",
+        "start": 21.68,
+        "end": 25.0
+      }
+    ]
+  },
+  {
+    "key": "03_01",
+    "unit": 3,
+    "track": 1,
+    "fileName": "03_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 2,
+    "partTitle": "Part 2: Question - Response",
+    "topic": "Who Questions",
+    "duration": 52.37,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "Q1",
+        "text": "Who did you meet at the seminar?",
+        "start": 14.6,
+        "end": 16.5
+      },
+      {
+        "id": 2,
+        "label": "A",
+        "text": "Some of our clients.",
+        "start": 17.1,
+        "end": 19.8
+      },
+      {
+        "id": 3,
+        "label": "B",
+        "text": "I don't know who he is.",
+        "start": 20.8,
+        "end": 23.3
+      },
+      {
+        "id": 4,
+        "label": "C",
+        "text": "To learn some skills.",
+        "start": 24.38,
+        "end": 26.5
+      },
+      {
+        "id": 5,
+        "label": "Q2",
+        "text": "Who is in charge of the accounting department?",
+        "start": 33.34,
+        "end": 35.8
+      },
+      {
+        "id": 6,
+        "label": "A",
+        "text": "Our new director.",
+        "start": 36.66,
+        "end": 39.0
+      },
+      {
+        "id": 7,
+        "label": "B",
+        "text": "He is a very responsible person.",
+        "start": 39.8,
+        "end": 43.0
+      },
+      {
+        "id": 8,
+        "label": "C",
+        "text": "She will be an assistant.",
+        "start": 44.16,
+        "end": 47.2
+      }
+    ]
+  },
+  {
+    "key": "04_01",
+    "unit": 4,
+    "track": 1,
+    "fileName": "04_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 2,
+    "partTitle": "Part 2: Question - Response",
+    "topic": "When Questions",
+    "duration": 48.04,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "Q1",
+        "text": "When is the deadline for the project?",
+        "start": 11.48,
+        "end": 14.5
+      },
+      {
+        "id": 2,
+        "label": "A",
+        "text": "It is next Friday.",
+        "start": 15.5,
+        "end": 17.5
+      },
+      {
+        "id": 3,
+        "label": "B",
+        "text": "We are behind schedule.",
+        "start": 18.6,
+        "end": 20.5
+      },
+      {
+        "id": 4,
+        "label": "C",
+        "text": "We will figure it out.",
+        "start": 21.0,
+        "end": 23.5
+      },
+      {
+        "id": 5,
+        "label": "Q2",
+        "text": "When will the closing ceremony be held?",
+        "start": 29.78,
+        "end": 32.5
+      },
+      {
+        "id": 6,
+        "label": "A",
+        "text": "It is tomorrow at 5 o'clock.",
+        "start": 34.0,
+        "end": 36.0
+      },
+      {
+        "id": 7,
+        "label": "B",
+        "text": "The case has been closed.",
+        "start": 36.7,
+        "end": 39.5
+      },
+      {
+        "id": 8,
+        "label": "C",
+        "text": "I will attend it for sure.",
+        "start": 40.3,
+        "end": 43.0
+      }
+    ]
+  },
+  {
+    "key": "05_01",
+    "unit": 5,
+    "track": 1,
+    "fileName": "05_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 2,
+    "partTitle": "Part 2: Question - Response",
+    "topic": "Yes/No Questions",
+    "duration": 51.34,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "Q1",
+        "text": "Is Mr. Ito in charge of customer service?",
+        "start": 11.56,
+        "end": 14.0
+      },
+      {
+        "id": 2,
+        "label": "A",
+        "text": "Yes, he is managing it.",
+        "start": 15.2,
+        "end": 17.8
+      },
+      {
+        "id": 3,
+        "label": "B",
+        "text": "The survey will be done.",
+        "start": 18.9,
+        "end": 21.2
+      },
+      {
+        "id": 4,
+        "label": "C",
+        "text": "No, everybody is busy.",
+        "start": 23.4,
+        "end": 25.2
+      },
+      {
+        "id": 5,
+        "label": "Q2",
+        "text": "Did Tim call someone to repair the copy machine?",
+        "start": 31.8,
+        "end": 34.8
+      },
+      {
+        "id": 6,
+        "label": "A",
+        "text": "To upgrade the machine.",
+        "start": 36.9,
+        "end": 38.3
+      },
+      {
+        "id": 7,
+        "label": "B",
+        "text": "Yes, a technician is coming today.",
+        "start": 39.3,
+        "end": 42.4
+      },
+      {
+        "id": 8,
+        "label": "C",
+        "text": "No, I said three.",
+        "start": 43.4,
+        "end": 46.2
+      }
+    ]
+  },
+  {
+    "key": "06_01",
+    "unit": 6,
+    "track": 1,
+    "fileName": "06_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 2,
+    "partTitle": "Part 2: Question - Response",
+    "topic": "Negative & Tag Questions",
+    "duration": 51.41,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "Q1",
+        "text": "Haven't you already booked a flight ticket?",
+        "start": 11.6,
+        "end": 14.0
+      },
+      {
+        "id": 2,
+        "label": "A",
+        "text": "No, I was too busy.",
+        "start": 14.8,
+        "end": 17.5
+      },
+      {
+        "id": 3,
+        "label": "B",
+        "text": "Yes, all the tickets were sold out.",
+        "start": 19.4,
+        "end": 21.5
+      },
+      {
+        "id": 4,
+        "label": "C",
+        "text": "My suitcases are full.",
+        "start": 22.3,
+        "end": 25.0
+      },
+      {
+        "id": 5,
+        "label": "Q2",
+        "text": "The dental clinic is open on Saturdays, isn't it?",
+        "start": 31.6,
+        "end": 34.6
+      },
+      {
+        "id": 6,
+        "label": "A",
+        "text": "The dentist was excellent.",
+        "start": 36.5,
+        "end": 38.5
+      },
+      {
+        "id": 7,
+        "label": "B",
+        "text": "Yes, until 2:00 PM.",
+        "start": 39.3,
+        "end": 42.1
+      },
+      {
+        "id": 8,
+        "label": "C",
+        "text": "The doctor's office is closed now.",
+        "start": 43.1,
+        "end": 46.2
+      }
+    ]
+  },
+  {
+    "key": "07_01",
+    "unit": 7,
+    "track": 1,
+    "fileName": "07_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 3,
+    "partTitle": "Part 3: Short Conversations",
+    "topic": "Office Communication",
+    "duration": 28.79,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "M",
+        "text": "Can I talk to the assistant manager?",
+        "start": 15.2,
+        "end": 17.2
+      },
+      {
+        "id": 2,
+        "label": "W",
+        "text": "He is in a meeting at the moment.",
+        "start": 17.5,
+        "end": 19.8
+      },
+      {
+        "id": 3,
+        "label": "M",
+        "text": "It's urgent. I have a lot of things to talk about the sales report.",
+        "start": 20.0,
+        "end": 23.5
+      },
+      {
+        "id": 4,
+        "label": "W",
+        "text": "All right, I will see what I can do.",
+        "start": 23.8,
+        "end": 25.8
+      }
+    ]
+  },
+  {
+    "key": "08_01",
+    "unit": 8,
+    "track": 1,
+    "fileName": "08_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 3,
+    "partTitle": "Part 3: Short Conversations",
+    "topic": "Ordering Supplies",
+    "duration": 26.91,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "W",
+        "text": "Hello, I would like to place an order for some notepads and pens.",
+        "start": 9.7,
+        "end": 13.5
+      },
+      {
+        "id": 2,
+        "label": "M",
+        "text": "How many do you need?",
+        "start": 13.8,
+        "end": 15.2
+      },
+      {
+        "id": 3,
+        "label": "W",
+        "text": "I need 50 of each, and I want them no later than next Thursday.",
+        "start": 15.5,
+        "end": 19.8
+      },
+      {
+        "id": 4,
+        "label": "M",
+        "text": "I can do that. Do you want me to have them delivered to your office?",
+        "start": 20.0,
+        "end": 23.8
+      }
+    ]
+  },
+  {
+    "key": "09_01",
+    "unit": 9,
+    "track": 1,
+    "fileName": "09_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 3,
+    "partTitle": "Part 3: Short Conversations",
+    "topic": "Hotel Check-in & Amenities",
+    "duration": 38.38,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "M",
+        "text": "I have a reservation, it's under the name of Mark Nelson.",
+        "start": 9.7,
+        "end": 13.4
+      },
+      {
+        "id": 2,
+        "label": "W",
+        "text": "Three nights, breakfast is included, and your room is equipped with a smartphone which provides unlimited local and international calls and internet access.",
+        "start": 14.0,
+        "end": 26.9
+      },
+      {
+        "id": 3,
+        "label": "M",
+        "text": "That will be very handy. What is not included, then?",
+        "start": 27.6,
+        "end": 31.5
+      },
+      {
+        "id": 4,
+        "label": "W",
+        "text": "If you consume anything from the minibar, it will be charged to your credit card.",
+        "start": 31.6,
+        "end": 35.5
+      }
+    ]
+  },
+  {
+    "key": "10_01",
+    "unit": 10,
+    "track": 1,
+    "fileName": "10_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 4,
+    "partTitle": "Part 4: Short Talks",
+    "topic": "Telephone Message - Rescheduling Appointment",
+    "duration": 40.86,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "1",
+        "text": "Hello, Ms. Fisher. This is Mark Freeman from Dr. Gibson's office.",
+        "start": 15.3,
+        "end": 19.2
+      },
+      {
+        "id": 2,
+        "label": "2",
+        "text": "I'm calling about your appointment at 11:00 AM on Thursday.",
+        "start": 19.8,
+        "end": 24.8
+      },
+      {
+        "id": 3,
+        "label": "3",
+        "text": "Unfortunately, Dr. Gibson has a conference to attend in Chicago from Wednesday to Friday.",
+        "start": 25.0,
+        "end": 31.0
+      },
+      {
+        "id": 4,
+        "label": "4",
+        "text": "If you are available next Monday, please call us at 252-6377.",
+        "start": 31.2,
+        "end": 35.5
+      },
+      {
+        "id": 5,
+        "label": "5",
+        "text": "I am sorry for the inconvenience.",
+        "start": 35.6,
+        "end": 37.8
+      }
+    ]
+  },
+  {
+    "key": "11_01",
+    "unit": 11,
+    "track": 1,
+    "fileName": "11_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 4,
+    "partTitle": "Part 4: Short Talks",
+    "topic": "Product Marketing Promotion",
+    "duration": 29.69,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "1",
+        "text": "Are you interested in promoting your products? Have you launched a new product recently?",
+        "start": 9.8,
+        "end": 14.5
+      },
+      {
+        "id": 2,
+        "label": "2",
+        "text": "We can help you find effective and inexpensive ways to promote your product launch.",
+        "start": 14.8,
+        "end": 20.0
+      },
+      {
+        "id": 3,
+        "label": "3",
+        "text": "Having good marketing strategies will appeal to potential customers, and we can make that happen for sure.",
+        "start": 20.2,
+        "end": 26.4
+      }
+    ]
+  },
+  {
+    "key": "12_01",
+    "unit": 12,
+    "track": 1,
+    "fileName": "12_01 - TOEIC Preparation Vol 1.mp3",
+    "part": 4,
+    "partTitle": "Part 4: Short Talks",
+    "topic": "Welcome Speech",
+    "duration": 26.08,
+    "sentences": [
+      {
+        "id": 1,
+        "label": "1",
+        "text": "Thank you for the opportunity to speak at this event.",
+        "start": 9.8,
+        "end": 13.5
+      },
+      {
+        "id": 2,
+        "label": "2",
+        "text": "On behalf of the entire staff, I would like to welcome all of you to our company.",
+        "start": 13.8,
+        "end": 17.5
+      },
+      {
+        "id": 3,
+        "label": "3",
+        "text": "I hope our relationship will be pleasant, profitable, and mutually beneficial.",
+        "start": 17.8,
+        "end": 22.9
+      }
+    ]
+  }
+]

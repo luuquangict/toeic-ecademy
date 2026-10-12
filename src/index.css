@@ -54,6 +54,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
@@ -130,4 +131,10 @@ body {
   height: 100dvh;
   overflow: hidden;
   position: relative;
+}
+
+/* Prevent iOS Rubber-banding bounce on all main scroll areas */
+.main-area {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
 }

@@ -11,7 +11,12 @@ import {
   VolumeX,
   Repeat,
   ExternalLink,
+  Eye,
+  EyeOff,
+  FileText,
+  Sparkles,
 } from "lucide-react";
+import { getAudioScriptByKey, ScriptSentence } from "../../../data/audioScripts";
 import { Sidebar } from "../../Layout/Sidebar";
 import { AudioNavContent } from "../AudioNavContent";
 import { TopHeader } from "../../Layout/TopHeader";
@@ -46,6 +51,10 @@ export const AudioPage: React.FC<AudioPageProps> = ({
   const [isABRepeat, setIsABRepeat] = useState<boolean>(true);
   const [loopStart, setLoopStart] = useState<number>(0);
   const [loopEnd, setLoopEnd] = useState<number>(0);
+
+  // Script & Shadowing States
+  const [scriptMode, setScriptMode] = useState<"full" | "hidden">("full");
+  const [revealedIds, setRevealedIds] = useState<Set<number>>(new Set());
 
   // Mobile Drawer state
   const [isMobileTracksOpen, setIsMobileTracksOpen] = useState<boolean>(false);
@@ -138,6 +147,7 @@ export const AudioPage: React.FC<AudioPageProps> = ({
     setCurrentTime(0);
     setLoopStart(0);
     setLoopEnd(0);
+    setRevealedIds(new Set());
     setIsMobileTracksOpen(false);
 
     setTimeout(() => {
@@ -148,6 +158,40 @@ export const AudioPage: React.FC<AudioPageProps> = ({
         });
       }
     }, 50);
+  };
+
+  // Current track script
+  const currentScript = useMemo(
+    () => getAudioScriptByKey(currentTrack.key),
+    [currentTrack.key],
+  );
+
+  // Click a sentence to auto-loop A-B and play
+  const handleSentenceClick = (sentence: ScriptSentence) => {
+    setLoopStart(sentence.start);
+    setLoopEnd(sentence.end);
+    setIsABRepeat(true);
+
+    if (audioRef.current) {
+      audioRef.current.currentTime = sentence.start;
+      audioRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+    setCurrentTime(sentence.start);
+  };
+
+  // Toggle reveal sentence in hidden mode
+  const toggleRevealSentence = (id: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setRevealedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
 
   // Generate realistic speech waveform peaks for current track
@@ -780,6 +824,111 @@ export const AudioPage: React.FC<AudioPageProps> = ({
               </div>
             </div>
           </div>
+
+          {/* Interactive Script & Practice Section */}
+          <section className="audio-script-section">
+            <div className="audio-script-header">
+              <div className="audio-script-title-group">
+                <div className="audio-script-title">
+                  <FileText size={18} className="script-title-icon" />
+                  <h3>Kịch bản bài nghe (Audio Script)</h3>
+                </div>
+                {currentScript && (
+                  <div className="audio-script-badges">
+                    <span className="script-part-badge">{currentScript.partTitle}</span>
+                    {currentScript.topic && (
+                      <span className="script-topic-badge">{currentScript.topic}</span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Mode switch: Full vs Hidden */}
+              {currentScript && (
+                <div className="script-mode-toggle-group">
+                  <button
+                    type="button"
+                    className={`script-mode-btn ${scriptMode === "full" ? "active" : ""}`}
+                    onClick={() => setScriptMode("full")}
+                    title="Hiện toàn bộ câu và chữ"
+                  >
+                    <Eye size={14} />
+                    <span>Hiện đầy đủ</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`script-mode-btn ${scriptMode === "hidden" ? "active" : ""}`}
+                    onClick={() => setScriptMode("hidden")}
+                    title="Chỉ hiện nhãn (A, B, C...) để tự luyện nghe"
+                  >
+                    <EyeOff size={14} />
+                    <span>Ẩn nội dung</span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {currentScript ? (
+              <div className="audio-script-list">
+                <div className="script-hint-banner">
+                  💡 <em>Mẹo:</em> Bấm vào từng dòng để tự động khoanh vùng [A-B] và lặp lại câu đó.
+                </div>
+
+                {currentScript.sentences.map((sentence) => {
+                  const isActive =
+                    currentTime >= sentence.start && currentTime <= sentence.end;
+                  const isRevealed =
+                    scriptMode === "full" || revealedIds.has(sentence.id);
+
+                  return (
+                    <div
+                      key={sentence.id}
+                      className={`script-line-item ${isActive ? "active" : ""}`}
+                      onClick={() => handleSentenceClick(sentence)}
+                      title={`Bấm để khoanh vùng A-B [${formatTime(sentence.start)} - ${formatTime(sentence.end)}] và lặp câu này`}
+                    >
+                      <div className="script-line-left">
+                        <span className={`script-label-badge label-${sentence.label.toLowerCase()}`}>
+                          {sentence.label}
+                        </span>
+                        <div className="script-text-container">
+                          {isRevealed ? (
+                            <span className="script-text">{sentence.text}</span>
+                          ) : (
+                            <span className="script-text-hidden">
+                              ••••••••••••••••••••••••
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="script-line-right">
+                        {scriptMode === "hidden" && (
+                          <button
+                            type="button"
+                            className="reveal-toggle-btn"
+                            onClick={(e) => toggleRevealSentence(sentence.id, e)}
+                            title={isRevealed ? "Ẩn câu này" : "Xem câu này"}
+                          >
+                            {isRevealed ? <EyeOff size={14} /> : <Eye size={14} />}
+                          </button>
+                        )}
+                        <span className="script-time-tag">
+                          {formatTime(sentence.start)} - {formatTime(sentence.end)}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="script-empty-state">
+                <Sparkles size={22} className="empty-icon" />
+                <p>Chưa có kịch bản mẫu cho track này.</p>
+                <span>(Kịch bản mẫu hiện hỗ trợ Track 01 của Unit 1 đến 12)</span>
+              </div>
+            )}
+          </section>
         </div>
       </main>
     </div>
