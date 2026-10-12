@@ -482,14 +482,9 @@ export const AudioPage: React.FC<AudioPageProps> = ({
             {/* Audio Waveform Video-Trimmer Track */}
             <div className="waveform-trimmer-section">
               <div className="trimmer-ruler-header">
-                <span className="ruler-label start">{formatTime(0)}</span>
-                {isABRepeat && (
-                  <span className="ruler-loop-info">
-                    ✂️ Đang chọn vùng: <strong>{formatTime(loopStart)}</strong>{" "}
-                    ➔ <strong>{formatTime(effectiveEnd)}</strong> (
-                    {Math.max(0, effectiveEnd - loopStart).toFixed(1)}s)
-                  </span>
-                )}
+                <span className="ruler-label start">
+                  {formatTime(currentTime)}
+                </span>
                 <span className="ruler-label end">{formatTime(duration)}</span>
               </div>
 
@@ -596,19 +591,6 @@ export const AudioPage: React.FC<AudioPageProps> = ({
                   <div className="playhead-line" />
                 </div>
               </div>
-
-              {/* Time labels below track */}
-              <div className="trimmer-bottom-times">
-                <span className="current-playhead-time">
-                  Đang phát: <strong>{formatTime(currentTime)}</strong> /{" "}
-                  {formatTime(duration)}
-                </span>
-                <span className="trimmer-hint">
-                  📍 Kéo 2 thanh dọc <strong>[A]</strong> và{" "}
-                  <strong>[B]</strong> để trượt trên track • Bấm vào sóng âm để
-                  tua
-                </span>
-              </div>
             </div>
 
             {/* Trimmer Control Toolbar */}
@@ -640,7 +622,7 @@ export const AudioPage: React.FC<AudioPageProps> = ({
                 />
                 <span className="toggle-switch-visual" />
                 <span className="toggle-label-text">
-                  <strong>Lặp lại đoạn đã chọn (Repeat Selection)</strong>
+                  <strong>Lặp lại đoạn đã chọn</strong>
                 </span>
               </label>
 

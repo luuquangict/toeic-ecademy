@@ -74,29 +74,22 @@ export const AudioNavContent: React.FC<AudioNavContentProps> = ({
         )}
       </div>
 
-      {/* Unit Filter Tabs */}
-      <div className="audio-sidebar-unit-tabs">
-        <button
-          onClick={() => setSelectedUnit("all")}
-          className={`unit-mini-tab ${selectedUnit === "all" ? "active" : ""}`}
+      {/* Unit Filter Select Dropdown */}
+      <div className="audio-sidebar-unit-select-wrap">
+        <select
+          className="audio-sidebar-unit-select"
+          value={selectedUnit}
+          onChange={(e) => setSelectedUnit(e.target.value)}
+          aria-label="Lọc theo Unit bài học"
         >
-          Tất cả
-        </button>
-        {unitList.map((u) => (
-          <button
-            key={u}
-            onClick={() => setSelectedUnit(String(u))}
-            className={`unit-mini-tab ${selectedUnit === String(u) ? "active" : ""}`}
-          >
-            Unit {u}
-          </button>
-        ))}
-        <button
-          onClick={() => setSelectedUnit("other")}
-          className={`unit-mini-tab ${selectedUnit === "other" ? "active" : ""}`}
-        >
-          Khác
-        </button>
+          <option value="all">Tất cả Unit</option>
+          {unitList.map((u) => (
+            <option key={u} value={String(u)}>
+              Unit {u}
+            </option>
+          ))}
+          <option value="other">Bài tập khác</option>
+        </select>
       </div>
 
       {/* Vertical Track List */}
