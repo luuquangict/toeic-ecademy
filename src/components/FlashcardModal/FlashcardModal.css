@@ -1,0 +1,68 @@
+/* Flashcard Modal Styles */
+.flashcard-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.flashcard-modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  max-width: 580px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.flashcard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.flashcard-card {
+  background: var(--bg-card-sub);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 26px;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 18px;
+  transition: var(--transition);
+}
+
+.flashcard-card:hover {
+  border-color: var(--accent-blue);
+}
+
+.fc-q {
+  font-size: 16.5px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.fc-hint {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.fc-a {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  margin-top: 10px;
+}

@@ -1,112 +1,74 @@
-import React from "react";
-import { Lesson } from "../types";
+import React, { useMemo } from "react";
+import { Lesson } from "../../../types";
 import {
-  Target,
   Headphones,
   BookOpen,
   Award,
   CheckCircle2,
   Circle,
   Search,
-  Moon,
-  Sun,
-  X,
   Sparkles,
   Zap,
 } from "lucide-react";
+import "./LessonNavContent.css";
 
-interface SidebarProps {
+export interface LessonNavContentProps {
   lessons: Lesson[];
   currentIndex: number;
   completedList: string[];
   currentFilter: "all" | "listening" | "reading";
   searchQuery: string;
-  theme: "dark" | "light";
-  isOpen: boolean;
   onSelectLesson: (index: number) => void;
   onFilterChange: (filter: "all" | "listening" | "reading") => void;
   onSearchChange: (query: string) => void;
-  onToggleTheme: () => void;
   onCloseMobile: () => void;
   onOpenQuizlet: () => void;
   onOpenFlashcards: () => void;
-  activePage?: "lessons" | "audio";
-  onNavigateAudio: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({
+export const LessonNavContent: React.FC<LessonNavContentProps> = ({
   lessons,
   currentIndex,
   completedList,
   currentFilter,
   searchQuery,
-  theme,
-  isOpen,
   onSelectLesson,
   onFilterChange,
   onSearchChange,
-  onToggleTheme,
   onCloseMobile,
   onOpenQuizlet,
   onOpenFlashcards,
-  activePage,
-  onNavigateAudio,
 }) => {
   const completedCount = completedList.length;
   const totalCount = lessons.length;
   const progressPct = Math.round((completedCount / totalCount) * 100);
 
-  const filteredLessons = lessons
-    .map((lesson, originalIndex) => ({ lesson, originalIndex }))
-    .filter(({ lesson }) => {
-      const matchFilter =
-        currentFilter === "all" ||
-        lesson.type === currentFilter ||
-        (currentFilter === "listening" && lesson.type.includes("listening")) ||
-        (currentFilter === "reading" && lesson.type.includes("reading"));
-
-      const q = searchQuery.toLowerCase();
-      const matchSearch =
-        !searchQuery ||
-        lesson.title.toLowerCase().includes(q) ||
-        lesson.desc.toLowerCase().includes(q);
-
-      return matchFilter && matchSearch;
-    });
+  const filteredLessons = useMemo(() => {
+    return lessons
+      .map((lesson, idx) => ({ lesson, originalIndex: idx }))
+      .filter(({ lesson }) => {
+        const matchesFilter =
+          currentFilter === "all" || lesson.type === currentFilter;
+        const q = searchQuery.toLowerCase().trim();
+        const matchesSearch =
+          !q ||
+          lesson.title.toLowerCase().includes(q) ||
+          (lesson.desc && lesson.desc.toLowerCase().includes(q)) ||
+          lesson.core.some(
+            (c) =>
+              c.title.toLowerCase().includes(q) ||
+              (Array.isArray(c.desc)
+                ? c.desc.some((d) => d.toLowerCase().includes(q))
+                : c.desc.toLowerCase().includes(q)),
+          );
+        return matchesFilter && matchesSearch;
+      });
+  }, [lessons, currentFilter, searchQuery]);
 
   return (
-    <aside className={`sidebar ${isOpen ? "open" : ""}`}>
-      <div className="sidebar-header">
-        <div className="brand-row">
-          <div className="brand-title">
-            <span className="brand-badge">
-              <Target size={18} />
-            </span>
-            <span>TOEIC Prep Hub</span>
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <button
-              className="btn-action"
-              onClick={onToggleTheme}
-              title={
-                theme === "dark" ? "Chuyển chế độ sáng" : "Chuyển chế độ tối"
-              }
-              style={{ padding: "6px 8px" }}
-            >
-              {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
-            </button>
-            <button
-              className="mobile-close-btn"
-              onClick={onCloseMobile}
-              title="Đóng sidebar"
-            >
-              <X size={18} />
-            </button>
-          </div>
-        </div>
-
-        {/* Progress box */}
+    <div className="lesson-nav-content">
+      {/* Progress box */}
+      <div className="sidebar-progress-section">
         <div className="progress-box">
           <div className="progress-info">
             <span>Tiến độ đã ôn:</span>
@@ -211,53 +173,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             10 Thẻ
           </span>
         </button>
-
-        <button
-          onClick={() => {
-            onNavigateAudio();
-            onCloseMobile();
-          }}
-          style={{
-            width: "100%",
-            background:
-              activePage === "audio"
-                ? "linear-gradient(135deg, rgba(6, 182, 212, 0.28), rgba(2, 132, 199, 0.28))"
-                : "linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(2, 132, 199, 0.12))",
-            border:
-              activePage === "audio"
-                ? "1px solid var(--accent-cyan)"
-                : "1px solid rgba(6, 182, 212, 0.35)",
-            borderRadius: "10px",
-            padding: "10px 12px",
-            color: "#67e8f9",
-            fontSize: "12.5px",
-            fontWeight: 700,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            transition: "all 0.2s ease",
-            boxShadow:
-              activePage === "audio" ? "0 0 12px rgba(6, 182, 212, 0.25)" : "none",
-          }}
-          title="Mở trang nghe 115 Audio Tracks sách TOEIC Preparation"
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <Headphones size={16} color="#06b6d4" />
-            <span>Kho Audio Sách Prep</span>
-          </div>
-          <span
-            style={{
-              background: "rgba(6, 182, 212, 0.25)",
-              color: "#a5f3fc",
-              fontSize: "10px",
-              padding: "2px 6px",
-              borderRadius: "4px",
-            }}
-          >
-            115 Track
-          </span>
-        </button>
       </div>
 
       {/* Search and Filters */}
@@ -321,29 +236,31 @@ export const Sidebar: React.FC<SidebarProps> = ({
             >
               <div className="nav-item-left">
                 <span className="nav-badge-icon">
-                  <IconComponent size={15} />
+                  <IconComponent size={16} />
                 </span>
                 <div className="nav-text-col">
                   <span className="nav-session-title">
                     {typeof lesson.sessionNum === "number"
                       ? `Buổi ${lesson.sessionNum}`
-                      : "Đề Giữa Kỳ"}
+                      : "Giữa Kỳ"}
                   </span>
                   <span className="nav-session-sub">{titlePart.trim()}</span>
                 </div>
               </div>
 
-              <span className="nav-status-icon">
+              <div className="nav-status-icon">
                 {isDone ? (
-                  <CheckCircle2 size={16} color="var(--accent-emerald)" />
+                  <CheckCircle2 size={16} />
                 ) : (
-                  <Circle size={15} />
+                  <Circle size={15} style={{ opacity: 0.3 }} />
                 )}
-              </span>
+              </div>
             </li>
           );
         })}
       </ul>
-    </aside>
+    </div>
   );
 };
+
+export default LessonNavContent;

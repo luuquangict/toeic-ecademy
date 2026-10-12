@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Lesson } from "../types";
+import { Lesson } from "../../../types";
 import {
   FolderOpen,
   Award,
@@ -14,29 +14,31 @@ import {
   AlertTriangle,
   Sparkles,
   Link as LinkIcon,
-  Headphones,
 } from "lucide-react";
+import "./LessonPage.css";
 
-interface LessonPageProps {
+export interface LessonPageProps {
   lesson: Lesson;
   prevLesson: Lesson | null;
   nextLesson: Lesson | null;
   onGoPrev: () => void;
   onGoNext: () => void;
   onOpenQuizlet: () => void;
-  onOpenAudioPage?: () => void;
 }
 
 const STORAGE_KEY_TASKS = "toeic_prep_completed_tasks";
 
 const renderFormulaContent = (
   content: string | string[],
-  type: "code" | "desc"
+  type: "code" | "desc",
 ) => {
   const items = Array.isArray(content)
     ? content
     : content.includes("\n")
-      ? content.split("\n").map((line) => line.trim()).filter(Boolean)
+      ? content
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
       : [content];
 
   const className = type === "code" ? "formula-code" : "formula-desc";
@@ -63,7 +65,6 @@ export const LessonPage: React.FC<LessonPageProps> = ({
   onGoPrev,
   onGoNext,
   onOpenQuizlet,
-  onOpenAudioPage,
 }) => {
   const [activeTab, setActiveTab] = useState<"all" | "core" | "tips" | "hw">(
     "all",
@@ -129,22 +130,6 @@ export const LessonPage: React.FC<LessonPageProps> = ({
           <BookCheck size={13} />
           <span>Parroto Thi Thử</span>
         </a>
-        {onOpenAudioPage && (
-          <button
-            onClick={onOpenAudioPage}
-            className="quick-link-pill"
-            style={{
-              cursor: "pointer",
-              border: "1px solid rgba(6, 182, 212, 0.4)",
-              background: "rgba(6, 182, 212, 0.12)",
-              color: "var(--accent-cyan)",
-              fontWeight: 600,
-            }}
-          >
-            <Headphones size={13} color="var(--accent-cyan)" />
-            <span>Nghe 115 Audio Online</span>
-          </button>
-        )}
       </div>
 
       {/* Lesson Hero Banner */}
@@ -374,3 +359,5 @@ export const LessonPage: React.FC<LessonPageProps> = ({
     </div>
   );
 };
+
+export default LessonPage;

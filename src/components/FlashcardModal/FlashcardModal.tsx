@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flashcard } from '../types';
+import { Flashcard } from '../../types';
 import { 
   Zap, 
   X, 
@@ -7,8 +7,9 @@ import {
   ChevronRight, 
   RotateCcw 
 } from 'lucide-react';
+import './FlashcardModal.css';
 
-interface FlashcardModalProps {
+export interface FlashcardModalProps {
   cards: Flashcard[];
   isOpen: boolean;
   onClose: () => void;
@@ -39,9 +40,9 @@ export const FlashcardModal: React.FC<FlashcardModalProps> = ({
   };
 
   return (
-    <div className="modal active" onClick={onClose}>
-      <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
+    <div className="flashcard-modal-backdrop" onClick={onClose}>
+      <div className="flashcard-modal-box" onClick={(e) => e.stopPropagation()}>
+        <div className="flashcard-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Zap size={18} color="var(--accent-amber)" />
             <h4 style={{ fontSize: '16px', fontWeight: 800 }}>Flashcard Ôn Nhanh Bẫy & Mẹo</h4>
@@ -59,7 +60,7 @@ export const FlashcardModal: React.FC<FlashcardModalProps> = ({
           </button>
         </div>
 
-        <div className="flashcard" onClick={() => setIsFlipped(!isFlipped)}>
+        <div className="flashcard-card" onClick={() => setIsFlipped(!isFlipped)}>
           <div className="fc-q">{currentCard.q}</div>
           {!isFlipped ? (
             <div className="fc-hint">
@@ -96,3 +97,5 @@ export const FlashcardModal: React.FC<FlashcardModalProps> = ({
     </div>
   );
 };
+
+export default FlashcardModal;
