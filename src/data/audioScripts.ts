@@ -1,4 +1,4 @@
-import audioScriptsData from './audioScripts.json';
+import { audioScriptsData } from './audioScriptsData';
 
 export interface ScriptSentence {
   id: number;
@@ -10,8 +10,8 @@ export interface ScriptSentence {
 
 export interface AudioScript {
   key: string;
-  unit: number;
-  track: number;
+  unit: number | null;
+  track: number | null;
   fileName: string;
   part: number;
   partTitle: string;
@@ -20,7 +20,7 @@ export interface AudioScript {
   sentences: ScriptSentence[];
 }
 
-export const audioScripts: AudioScript[] = audioScriptsData as AudioScript[];
+export const audioScripts: AudioScript[] = audioScriptsData;
 
 export const getAudioScriptByKey = (key: string): AudioScript | undefined => {
   return audioScripts.find((item) => item.key === key);

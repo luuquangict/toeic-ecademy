@@ -902,8 +902,8 @@ export const AudioPage: React.FC<AudioPageProps> = ({
                         </div>
                       </div>
 
-                      <div className="script-line-right">
-                        {scriptMode === "hidden" && (
+                      {scriptMode === "hidden" && (
+                        <div className="script-line-right">
                           <button
                             type="button"
                             className="reveal-toggle-btn"
@@ -912,11 +912,8 @@ export const AudioPage: React.FC<AudioPageProps> = ({
                           >
                             {isRevealed ? <EyeOff size={14} /> : <Eye size={14} />}
                           </button>
-                        )}
-                        <span className="script-time-tag">
-                          {formatTime(sentence.start)} - {formatTime(sentence.end)}
-                        </span>
-                      </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
