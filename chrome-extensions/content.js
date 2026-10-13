@@ -560,7 +560,18 @@
   // --------------------------------------------------------------------------
   btnToggleMaxWidth.addEventListener('click', (e) => {
     e.stopPropagation();
-    isMaximizedWidth = !isMaximizedWidth;
+
+    // Nếu đang ở trạng thái minimum, tự động mở chiều cao trở lại và bật max width
+    if (isMinimized) {
+      isMinimized = false;
+      wrapper.classList.remove('minimized');
+      btnToggleMin.innerHTML = ICONS.minimize;
+      btnToggleMin.title = 'Thu nhỏ';
+      isMaximizedWidth = true;
+    } else {
+      isMaximizedWidth = !isMaximizedWidth;
+    }
+
     btnToggleMaxWidth.classList.toggle('active', isMaximizedWidth);
 
     if (isMaximizedWidth) {
@@ -580,6 +591,15 @@
     e.stopPropagation();
     isMinimized = !isMinimized;
     if (isMinimized) {
+      // Khi đang ở maxsize, bấm mini thì thu nhỏ lại và tắt chế độ max chiều rộng
+      if (isMaximizedWidth) {
+        isMaximizedWidth = false;
+        wrapper.classList.remove('max-width-mode');
+        btnToggleMaxWidth.classList.remove('active');
+        btnToggleMaxWidth.title = 'Tối đa chiều rộng';
+        currentX = Math.round(Math.max(16, (window.innerWidth - 880) / 2));
+        wrapper.style.transform = `translate3d(${currentX}px, ${Math.round(currentY)}px, 0)`;
+      }
       wrapper.classList.add('minimized');
       btnToggleMin.innerHTML = ICONS.maximize;
       btnToggleMin.title = 'Mở rộng';
