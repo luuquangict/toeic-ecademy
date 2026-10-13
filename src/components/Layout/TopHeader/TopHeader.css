@@ -96,8 +96,7 @@
 
 @media (max-width: 820px) {
   .top-header {
-    padding: 0 12px;
-    height: 60px;
+    padding: 0 12px;    
     min-height: 60px;
     max-height: 60px;
   }
