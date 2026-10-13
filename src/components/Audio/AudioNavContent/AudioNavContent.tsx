@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { AudioTrack } from "../../../data/audio";
-import { Search, Play, Pause, Music } from "lucide-react";
+import { Search, Play, Pause, Music, ClipboardList } from "lucide-react";
 import "./AudioNavContent.css";
 
 export interface AudioNavContentProps {
@@ -9,6 +9,7 @@ export interface AudioNavContentProps {
   isPlaying: boolean;
   onSelectTrack: (track: AudioTrack) => void;
   onCloseMobile: () => void;
+  onOpenReportList?: () => void;
 }
 
 export const AudioNavContent: React.FC<AudioNavContentProps> = ({
@@ -17,9 +18,10 @@ export const AudioNavContent: React.FC<AudioNavContentProps> = ({
   isPlaying,
   onSelectTrack,
   onCloseMobile,
+  onOpenReportList,
 }) => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedUnit, setSelectedUnit] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState<string>(""),
+    [selectedUnit, setSelectedUnit] = useState<string>("all");
 
   // Units list for tabs
   const unitList = useMemo(() => {
@@ -148,6 +150,22 @@ export const AudioNavContent: React.FC<AudioNavContentProps> = ({
             );
           })
         )}
+      </div>
+
+      {/* Footer item: Danh sách report */}
+      <div className="audio-sidebar-footer">
+        <button
+          type="button"
+          className="audio-sidebar-report-btn"
+          onClick={() => {
+            if (onOpenReportList) onOpenReportList();
+            onCloseMobile();
+          }}
+          title="Xem danh sách các bài bị report lỗi"
+        >
+          <ClipboardList size={16} className="report-btn-icon" />
+          <span>Danh sách report</span>
+        </button>
       </div>
     </div>
   );

@@ -15,11 +15,16 @@ import {
   EyeOff,
   FileText,
   Sparkles,
+  Flag,
 } from "lucide-react";
-import { getAudioScriptByKey, ScriptSentence } from "../../../data/audioScripts";
+import {
+  getAudioScriptByKey,
+  ScriptSentence,
+} from "../../../data/audioScripts";
 import { Sidebar } from "../../Layout/Sidebar";
 import { AudioNavContent } from "../AudioNavContent";
 import { TopHeader } from "../../Layout/TopHeader";
+import { ReportModal, ReportListModal } from "../Report";
 import "./AudioPage.css";
 
 interface AudioPageProps {
@@ -58,6 +63,11 @@ export const AudioPage: React.FC<AudioPageProps> = ({
 
   // Mobile Drawer state
   const [isMobileTracksOpen, setIsMobileTracksOpen] = useState<boolean>(false);
+
+  // Report Modals States
+  const [isReportModalOpen, setIsReportModalOpen] = useState<boolean>(false);
+  const [isReportListModalOpen, setIsReportListModalOpen] =
+    useState<boolean>(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -481,6 +491,7 @@ export const AudioPage: React.FC<AudioPageProps> = ({
           isPlaying={isPlaying}
           onSelectTrack={(track) => playTrack(track)}
           onCloseMobile={() => setIsMobileTracksOpen(false)}
+          onOpenReportList={() => setIsReportListModalOpen(true)}
         />
       </Sidebar>
 
@@ -835,34 +846,50 @@ export const AudioPage: React.FC<AudioPageProps> = ({
                 </div>
                 {currentScript && (
                   <div className="audio-script-badges">
-                    <span className="script-part-badge">{currentScript.partTitle}</span>
+                    <span className="script-part-badge">
+                      {currentScript.partTitle}
+                    </span>
                     {currentScript.topic && (
-                      <span className="script-topic-badge">{currentScript.topic}</span>
+                      <span className="script-topic-badge">
+                        {currentScript.topic}
+                      </span>
                     )}
                   </div>
                 )}
               </div>
 
-              {/* Mode switch: Full vs Hidden */}
+              {/* Mode switch & Report button */}
               {currentScript && (
-                <div className="script-mode-toggle-group">
+                <div className="script-header-actions-group">
+                  <div className="script-mode-toggle-group">
+                    <button
+                      type="button"
+                      className={`script-mode-btn ${scriptMode === "full" ? "active" : ""}`}
+                      onClick={() => setScriptMode("full")}
+                      title="Hiện toàn bộ câu và chữ"
+                    >
+                      <Eye size={14} />
+                      <span>Hiện đầy đủ</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`script-mode-btn ${scriptMode === "hidden" ? "active" : ""}`}
+                      onClick={() => setScriptMode("hidden")}
+                      title="Chỉ hiện nhãn (A, B, C...) để tự luyện nghe"
+                    >
+                      <EyeOff size={14} />
+                      <span>Ẩn nội dung</span>
+                    </button>
+                  </div>
+
                   <button
                     type="button"
-                    className={`script-mode-btn ${scriptMode === "full" ? "active" : ""}`}
-                    onClick={() => setScriptMode("full")}
-                    title="Hiện toàn bộ câu và chữ"
+                    className="script-report-trigger-btn"
+                    onClick={() => setIsReportModalOpen(true)}
+                    title="Báo cáo lỗi kịch bản hoặc lệch thời gian"
                   >
-                    <Eye size={14} />
-                    <span>Hiện đầy đủ</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`script-mode-btn ${scriptMode === "hidden" ? "active" : ""}`}
-                    onClick={() => setScriptMode("hidden")}
-                    title="Chỉ hiện nhãn (A, B, C...) để tự luyện nghe"
-                  >
-                    <EyeOff size={14} />
-                    <span>Ẩn nội dung</span>
+                    <Flag size={13} />
+                    <span>Report</span>
                   </button>
                 </div>
               )}
@@ -871,12 +898,14 @@ export const AudioPage: React.FC<AudioPageProps> = ({
             {currentScript ? (
               <div className="audio-script-list">
                 <div className="script-hint-banner">
-                  💡 <em>Mẹo:</em> Bấm vào từng dòng để tự động khoanh vùng [A-B] và lặp lại câu đó.
+                  💡 <em>Mẹo:</em> Bấm vào từng dòng để tự động khoanh vùng
+                  [A-B] và lặp lại câu đó.
                 </div>
 
                 {currentScript.sentences.map((sentence) => {
                   const isActive =
-                    currentTime >= sentence.start && currentTime <= sentence.end;
+                    currentTime >= sentence.start &&
+                    currentTime <= sentence.end;
                   const isRevealed =
                     scriptMode === "full" || revealedIds.has(sentence.id);
 
@@ -888,7 +917,9 @@ export const AudioPage: React.FC<AudioPageProps> = ({
                       title={`Bấm để khoanh vùng A-B [${formatTime(sentence.start)} - ${formatTime(sentence.end)}] và lặp câu này`}
                     >
                       <div className="script-line-left">
-                        <span className={`script-label-badge label-${sentence.label.toLowerCase()}`}>
+                        <span
+                          className={`script-label-badge label-${sentence.label.toLowerCase()}`}
+                        >
                           {sentence.label}
                         </span>
                         <div className="script-text-container">
@@ -907,10 +938,16 @@ export const AudioPage: React.FC<AudioPageProps> = ({
                           <button
                             type="button"
                             className="reveal-toggle-btn"
-                            onClick={(e) => toggleRevealSentence(sentence.id, e)}
+                            onClick={(e) =>
+                              toggleRevealSentence(sentence.id, e)
+                            }
                             title={isRevealed ? "Ẩn câu này" : "Xem câu này"}
                           >
-                            {isRevealed ? <EyeOff size={14} /> : <Eye size={14} />}
+                            {isRevealed ? (
+                              <EyeOff size={14} />
+                            ) : (
+                              <Eye size={14} />
+                            )}
                           </button>
                         </div>
                       )}
@@ -922,12 +959,34 @@ export const AudioPage: React.FC<AudioPageProps> = ({
               <div className="script-empty-state">
                 <Sparkles size={22} className="empty-icon" />
                 <p>Chưa có kịch bản mẫu cho track này.</p>
-                <span>(Kịch bản mẫu hiện hỗ trợ Track 01 của Unit 1 đến 12)</span>
+                <span>
+                  (Kịch bản mẫu hiện hỗ trợ Track 01 của Unit 1 đến 12)
+                </span>
               </div>
             )}
           </section>
         </div>
       </main>
+
+      {/* Report Modal (Báo lỗi cho bài hiện tại) */}
+      <ReportModal
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+        trackKey={currentTrack.key}
+        trackTitle={currentTrack.title}
+      />
+
+      {/* Report List Modal (Danh sách bài bị report) */}
+      <ReportListModal
+        isOpen={isReportListModalOpen}
+        onClose={() => setIsReportListModalOpen(false)}
+        onSelectTrackByKey={(trackKey) => {
+          const targetTrack = audioTracks.find((t) => t.key === trackKey);
+          if (targetTrack) {
+            playTrack(targetTrack);
+          }
+        }}
+      />
     </div>
   );
 };

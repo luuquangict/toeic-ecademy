@@ -1,0 +1,227 @@
+/* Report List Modal Box */
+.report-list-modal-box {
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  background: var(--bg-card, #121a2f);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+  border-radius: 18px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: reportScaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.report-total-badge {
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(245, 158, 11, 0.18);
+  color: #f59e0b;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.report-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.report-refresh-btn {
+  background: transparent;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  color: var(--text-muted, #94a3b8);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.report-refresh-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.report-list-modal-body {
+  padding: 16px 20px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Loading & Empty States */
+.report-loading-state,
+.report-empty-state {
+  padding: 48px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  color: var(--text-muted, #94a3b8);
+}
+
+.report-empty-state .empty-icon {
+  color: var(--text-muted, #64748b);
+  opacity: 0.6;
+}
+
+.report-empty-state p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+}
+
+.report-empty-state span {
+  font-size: 12px;
+  color: var(--text-muted, #94a3b8);
+  max-width: 320px;
+}
+
+/* Table List Rows */
+.report-items-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.06));
+  border-radius: 12px;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.report-table-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px);
+}
+
+.row-col-track {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 140px;
+  flex: 1;
+}
+
+.row-track-key {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: monospace;
+  color: #818cf8;
+}
+
+.row-track-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+}
+
+.row-col-reason {
+  display: flex;
+  align-items: center;
+}
+
+.reason-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.reason-pill.script {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.reason-pill.time {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.row-col-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  min-width: 48px;
+}
+
+.count-number {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.count-label {
+  font-size: 10px;
+  color: var(--text-muted, #94a3b8);
+}
+
+.row-play-btn {
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #818cf8;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.row-play-btn:hover {
+  background: #6366f1;
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+@media (max-width: 600px) {
+  .report-table-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .row-col-reason {
+    order: 3;
+    width: 100%;
+  }
+}

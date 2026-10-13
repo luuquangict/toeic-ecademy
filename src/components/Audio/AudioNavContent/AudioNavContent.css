@@ -193,3 +193,40 @@
   text-align: center;
   gap: 8px;
 }
+
+/* Sidebar Footer (Danh sách report) */
+.audio-sidebar-footer {
+  padding: 10px 14px 12px;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-card);
+  margin-top: auto;
+}
+
+.audio-sidebar-report-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 14px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: var(--radius-sm, 8px);
+  color: #f59e0b;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.audio-sidebar-report-btn:hover {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: #f59e0b;
+  color: #fbbf24;
+  transform: translateY(-1px);
+}
+
+.audio-sidebar-report-btn .report-btn-icon {
+  color: #f59e0b;
+}
+
