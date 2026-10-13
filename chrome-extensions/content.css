@@ -1,0 +1,536 @@
+/* ==========================================================================
+   TOEIC Audio A-B Loop Chrome Extension Styles (Floating Window Dock)
+   Sắc nét font chữ (Fix nhòe mờ), Tối đa chiều rộng, Điều khiển Play/Speed
+   ========================================================================== */
+
+.toeic-ab-loop-wrapper {
+  position: fixed;
+  z-index: 2147483647;
+  top: 0;
+  left: 0;
+  width: min(880px, calc(100vw - 32px));
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #f8fafc;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.toeic-ab-loop-wrapper,
+.toeic-ab-loop-wrapper *,
+.toeic-ab-loop-wrapper *::before,
+.toeic-ab-loop-wrapper *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Master Player Card - Bỏ backdrop-filter để chữ không bị nhòe/mờ texture */
+.toeic-ext-card {
+  width: 100%;
+  background: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 3px solid #06b6d4;
+  border-radius: 10px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+  padding: 10px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Max Width Mode (Tối đa chiều rộng, giữ nguyên chiều cao) */
+.toeic-ab-loop-wrapper.max-width-mode {
+  width: calc(100vw - 24px) !important;
+}
+
+/* Minimized Dock State */
+.toeic-ab-loop-wrapper.minimized {
+  width: auto;
+}
+
+.toeic-ab-loop-wrapper.minimized .toeic-ext-body {
+  display: none;
+}
+
+.toeic-ab-loop-wrapper.minimized .toeic-ext-card {
+  padding: 8px 14px;
+  border-top-width: 2px;
+}
+
+/* Window Header Bar (Drag Bar) */
+.toeic-ext-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: grab;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.toeic-ext-header:active {
+  cursor: grabbing;
+}
+
+.toeic-ext-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toeic-ext-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(6, 182, 212, 0.15);
+  color: #06b6d4;
+}
+
+.toeic-ext-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #f1f5f9;
+}
+
+.toeic-ext-status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toeic-ext-status-badge.active {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+}
+
+.toeic-ext-status-badge.searching {
+  background: rgba(234, 179, 8, 0.18);
+  color: #facc15;
+}
+
+.toeic-ext-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toeic-ext-header-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #94a3b8;
+  border-radius: 5px;
+  padding: 3px 7px;
+  font-size: 11px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.toeic-ext-header-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #f8fafc;
+}
+
+.toeic-ext-header-btn.active {
+  background: rgba(6, 182, 212, 0.2);
+  border-color: #06b6d4;
+  color: #06b6d4;
+}
+
+/* Body Section */
+.toeic-ext-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Waveform Trimmer Section */
+.waveform-trimmer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  user-select: none;
+}
+
+/* Top Ruler Header */
+.trimmer-ruler-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+}
+
+.ruler-label.start {
+  color: #06b6d4;
+  font-weight: 700;
+}
+
+.ruler-label.end {
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* Viewport Track */
+.trimmer-viewport {
+  position: relative;
+  width: 100%;
+  height: 86px;
+  background: #090d16;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  overflow: visible;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.trimmer-track-surface {
+  position: absolute;
+  inset: 0;
+  border-radius: 7px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Waveform Bars (Render 1 lần tĩnh) */
+.trimmer-waveform-bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wave-bar {
+  width: 2px;
+  border-radius: 1px;
+  min-height: 4px;
+  background: #54858d;
+}
+
+/* Dimmed Outside Shades */
+.trimmer-dim-shade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: rgba(9, 13, 22, 0.72);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.trimmer-dim-shade.left {
+  left: 0;
+  border-right: 1px dashed rgba(255, 255, 255, 0.22);
+}
+
+.trimmer-dim-shade.right {
+  border-left: 1px dashed rgba(255, 255, 255, 0.22);
+}
+
+/* Active Selection Box */
+.trimmer-selection-window {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: rgba(34, 197, 94, 0.08);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.trimmer-edge-border {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #54858d;
+}
+
+.trimmer-edge-border.top { top: 0; }
+.trimmer-edge-border.bottom { bottom: 0; }
+
+/* Trimmer Vertical Handles */
+.trimmer-vertical-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2.5px;
+  cursor: ew-resize;
+  z-index: 10;
+  user-select: none;
+  touch-action: none;
+  transform: translateX(-50%);
+}
+
+.trimmer-vertical-handle::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  bottom: -22px;
+  left: -12px;
+  right: -12px;
+  cursor: ew-resize;
+  z-index: 1;
+}
+
+.trimmer-vertical-handle.handle-start {
+  background: #dfccad;
+}
+
+.trimmer-vertical-handle.handle-end {
+  background: #ee9494;
+}
+
+/* Handle Flags (Top) */
+.handle-flag {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 3px;
+  padding: 1px 4px;
+  line-height: 1;
+  z-index: 2;
+  font-family: inherit;
+}
+
+.handle-start .handle-flag {
+  background: #c69750;
+  color: #000;
+  border: 1px solid #fbbf24;
+}
+
+.handle-end .handle-flag {
+  background: #9d3f3f;
+  color: #fff;
+  border: 1px solid #f87171;
+}
+
+/* Handle Time Pills (Bottom) */
+.handle-time-pill {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10.5px;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.handle-start .handle-time-pill {
+  background: #f59e0b;
+  color: #000;
+}
+
+.handle-end .handle-time-pill {
+  background: #ef4444;
+  color: #fff;
+}
+
+/* Playhead Needle */
+.trimmer-playhead-needle {
+  position: absolute;
+  top: -8px;
+  bottom: 0;
+  width: 2px;
+  background: #06b6d4;
+  pointer-events: none;
+  z-index: 8;
+  transform: translateX(-50%);
+}
+
+.playhead-cap {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #06b6d4;
+}
+
+.playhead-line {
+  position: absolute;
+  top: 8px;
+  bottom: 0;
+  width: 2px;
+  background: #06b6d4;
+}
+
+/* Trimmer Toolbar Row */
+.trimmer-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+/* Playback & Speed Controls (Bên trái) */
+.trimmer-playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.trimmer-btn.btn-play-toggle {
+  width: 95px;
+  min-width: 95px;
+  background: rgba(16, 185, 129, 0.16);
+  border-color: #10b981;
+  color: #34d399;
+}
+
+.trimmer-btn.btn-play-toggle.playing {
+  background: rgba(234, 179, 8, 0.16);
+  border-color: #eab308;
+  color: #facc15;
+}
+
+.trimmer-btn.btn-play-toggle:hover {
+  background: rgba(16, 185, 129, 0.28);
+}
+
+.speed-pills-group {
+  display: flex;
+  align-items: center;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.speed-pill-btn {
+  padding: 4px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  width: 40px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.speed-pill-btn:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.speed-pill-btn.active {
+  background: #06b6d4;
+  color: #000;
+  font-weight: 700;
+}
+
+/* Action Buttons (Bên phải) */
+.trimmer-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Trimmer Buttons (Fix cứng chiều rộng để chống giật) */
+.trimmer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 6px;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  font-family: inherit;
+  white-space: nowrap;
+  user-select: none;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.trimmer-btn:hover {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: #06b6d4;
+  color: #06b6d4;
+}
+
+.trimmer-btn.replay-a {
+  width: 140px;
+  min-width: 140px;
+  background: rgba(6, 182, 212, 0.15);
+  border-color: #06b6d4;
+  color: #06b6d4;
+}
+
+.trimmer-btn.replay-a:hover {
+  background: rgba(6, 182, 212, 0.28);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+}
+
+.trimmer-btn.btn-set-point {
+  width: 155px;
+  min-width: 155px;
+}
+
+.trimmer-btn.reset {
+  width: 125px;
+  min-width: 125px;
+  color: #94a3b8;
+}
+
+.trimmer-btn.reset:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.trimmer-btn svg {
+  flex-shrink: 0;
+}
+
+.btn-time-val {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  min-width: 38px;
+  text-align: center;
+}
