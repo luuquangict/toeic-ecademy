@@ -21,12 +21,14 @@ Extension hỗ trợ lặp đoạn âm thanh A-B trực tiếp trên các websit
 
 ## ⌨️ Phím tắt tiện lợi (Hotkeys)
 - **`Space`**: Tạm dừng / Phát tiếp
-- **`Ctrl`**: Phát lại từ mốc [A]
-- **Mũi tên trái `←`**: Lùi lại 5 giây
-- **Mũi tên phải `→`**: Tiến tới 5 giây
+- **Phím số `0`**: Phát lại từ mốc [A]
+- **Phím `Delete`**: Reset khoảng A-B về toàn bài
+- **Phím `Enter`**: Nghe tiếp đoạn tiếp theo (chuyển mốc A về vị trí B hiện tại, B về cuối bài)
+- **Phím `+` (Bàn phím số Numpad)**: Kéo dài mốc [B] thêm 5 giây
+- **Mũi tên trái `←`**: Lùi lại 3 giây
+- **Mũi tên phải `→`**: Tiến tới 3 giây
 - **Mũi tên lên `↑`**: Đặt mốc [A] tại giây đang nghe
 - **Mũi tên xuống `↓`**: Đặt mốc [B] tại giây đang nghe
-- **Phím số `0`**: Reset toàn bài
 *(Hệ thống tự động bỏ qua phím tắt khi bạn đang gõ văn bản trong các ô input/textarea của bài thi).*
 
 ## Hướng dẫn cài đặt vào Google Chrome

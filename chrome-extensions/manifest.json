@@ -11,8 +11,19 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["scripts/content.js"],
+      "matches": [
+        "https://test.ebomb.edu.vn/*",
+        "*://*.ebomb.edu.vn/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+      ],
+      "js": [
+        "scripts/constants.js",
+        "scripts/audio.js",
+        "scripts/dock.js",
+        "scripts/hotkeys.js",
+        "scripts/content.js"
+      ],
       "css": ["styles/content.css"],
       "run_at": "document_idle"
     }
