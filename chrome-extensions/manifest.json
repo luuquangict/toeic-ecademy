@@ -1,29 +1,20 @@
 {
   "manifest_version": 3,
-  "name": "TOEIC Audio A-B Loop Controller",
-  "version": "1.0.0",
-  "description": "Chrome Extension lặp đoạn A-B cho audio học tiếng Anh với thanh sóng âm waveform và kéo thả A-B trực quan.",
+  "author": "luuquangict",
+  "name": "Audio A-B Loop Controller",
+  "version": "1.0.1",
+  "description": "Chrome Extension lặp đoạn A-B cho audio",
   "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://test.ebomb.edu.vn/*",
-        "*://*.ebomb.edu.vn/*",
-        "<all_urls>"
-      ],
-      "js": ["content.js"],
-      "css": ["content.css"],
+      "matches": ["<all_urls>"],
+      "js": ["scripts/content.js"],
+      "css": ["styles/content.css"],
       "run_at": "document_idle"
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["content.css", "icon16.png", "icon48.png", "icon128.png"],
-      "matches": ["<all_urls>"]
     }
   ]
 }

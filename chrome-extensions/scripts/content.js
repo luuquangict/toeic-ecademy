@@ -65,6 +65,7 @@
   // --------------------------------------------------------------------------
   const wrapper = document.createElement('div');
   wrapper.className = 'toeic-ab-loop-wrapper';
+  wrapper.style.display = 'none'; // Ẩn mặc định, chỉ hiện khi tìm thấy audio trên trang
   wrapper.innerHTML = `
     <div class="toeic-ext-card">
       <!-- Window Header Bar (Drag Handle) -->
@@ -132,7 +133,7 @@
         <div class="trimmer-toolbar-row">
           <!-- Playback controls (Bên trái: Play/Pause + Chỉnh tốc độ) -->
           <div class="trimmer-playback-controls">
-            <button type="button" class="trimmer-btn btn-play-toggle" id="btn-play-toggle" title="Phát / Tạm dừng">
+            <button type="button" class="trimmer-btn btn-play-toggle" id="btn-play-toggle" title="Phát / Dừng (Phím Space)">
               <span class="icon-play-svg">${ICONS.play}</span>
               <span class="icon-pause-svg" style="display: none;">${ICONS.pause}</span>
               <span id="label-play-toggle">Phát</span>
@@ -148,16 +149,16 @@
 
           <!-- Action buttons (Bên phải: 4 nút cố định chiều rộng) -->
           <div class="trimmer-action-buttons">
-            <button type="button" class="trimmer-btn replay-a" id="btn-replay-a" title="Phát lại ngay lập tức bắt đầu từ mốc [A]">
+            <button type="button" class="trimmer-btn replay-a" id="btn-replay-a" title="Phát lại từ [A] (Phím Ctrl)">
               ${ICONS.rotateCcw} Phát lại từ [A]
             </button>
-            <button type="button" class="trimmer-btn btn-set-point" id="btn-set-a" title="Đặt thanh dọc [A] tại giây đang nghe">
+            <button type="button" class="trimmer-btn btn-set-point" id="btn-set-a" title="Đặt mốc [A] (Phím ↑)">
               📍 Đặt [A] (<span class="btn-time-val" id="time-val-a">00:00</span>)
             </button>
-            <button type="button" class="trimmer-btn btn-set-point" id="btn-set-b" title="Đặt thanh dọc [B] tại giây đang nghe">
+            <button type="button" class="trimmer-btn btn-set-point" id="btn-set-b" title="Đặt mốc [B] (Phím ↓)">
               🏁 Đặt [B] (<span class="btn-time-val" id="time-val-b">00:00</span>)
             </button>
-            <button type="button" class="trimmer-btn reset" id="btn-reset-ab" title="Reset khoảng A-B về toàn bài">
+            <button type="button" class="trimmer-btn reset" id="btn-reset-ab" title="Reset khoảng A-B về toàn bài (Phím 0)">
               Reset toàn bài
             </button>
           </div>
@@ -364,16 +365,20 @@
   function findAndAttachAudio() {
     const mediaEls = Array.from(document.querySelectorAll('audio, video'));
     if (mediaEls.length > 0) {
+      initDockPosition();
+      wrapper.style.display = '';
       const playing = mediaEls.find((m) => !m.paused);
       attachToAudio(playing || mediaEls[0]);
     } else {
-      statusBadge.textContent = 'Đang tìm audio...';
-      statusBadge.className = 'toeic-ext-status-badge searching';
+      wrapper.style.display = 'none';
+      activeAudio = null;
     }
   }
 
   document.addEventListener('play', (e) => {
     if (e.target instanceof HTMLMediaElement) {
+      initDockPosition();
+      wrapper.style.display = '';
       attachToAudio(e.target);
     }
   }, true);
@@ -484,14 +489,7 @@
   btnPlayToggle.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!activeAudio) return;
-
-    if (activeAudio.paused) {
-      activeAudio.play().catch((err) => console.error("Play error:", err));
-    } else {
-      activeAudio.pause();
-    }
-    updatePlayButtonVisual();
+    togglePlayPause();
   });
 
   speedPillsGroup.addEventListener('click', (e) => {
@@ -512,18 +510,16 @@
   });
 
   // --------------------------------------------------------------------------
-  // 4 Action Buttons
+  // 4 Action Handlers
   // --------------------------------------------------------------------------
-  btnReplayA.addEventListener('click', (e) => {
-    e.stopPropagation();
+  function triggerReplayA() {
     if (!activeAudio) return;
     activeAudio.currentTime = loopStart;
     activeAudio.play().catch(() => {});
     updatePlaybackUI();
-  });
+  }
 
-  btnSetA.addEventListener('click', (e) => {
-    e.stopPropagation();
+  function triggerSetA() {
     if (!activeAudio) return;
     const d = activeAudio.duration || 100;
     const curEnd = loopEnd > 0 ? loopEnd : d;
@@ -533,10 +529,9 @@
       loopEnd = Math.min(d, newA + 5);
     }
     updateTrimmerPositions();
-  });
+  }
 
-  btnSetB.addEventListener('click', (e) => {
-    e.stopPropagation();
+  function triggerSetB() {
     if (!activeAudio) return;
     const d = activeAudio.duration || 100;
     const newB = Math.max(activeAudio.currentTime, 0.5);
@@ -545,14 +540,102 @@
       loopStart = Math.max(0, loopEnd - 5);
     }
     updateTrimmerPositions();
-  });
+  }
 
-  btnResetAB.addEventListener('click', (e) => {
-    e.stopPropagation();
+  function triggerResetAB() {
     if (!activeAudio) return;
     loopStart = 0;
     loopEnd = activeAudio.duration || 100;
     updateTrimmerPositions();
+  }
+
+  // 4 Action Buttons click events
+  btnReplayA.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerReplayA();
+  });
+
+  btnSetA.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerSetA();
+  });
+
+  btnSetB.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerSetB();
+  });
+
+  btnResetAB.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerResetAB();
+  });
+
+  function togglePlayPause() {
+    if (!activeAudio) return;
+    if (activeAudio.paused) {
+      activeAudio.play().catch((err) => console.error("Play error:", err));
+    } else {
+      activeAudio.pause();
+    }
+    updatePlayButtonVisual();
+  }
+
+  function skipSeconds(sec) {
+    if (!activeAudio) return;
+    const d = activeAudio.duration || 100;
+    const newTime = Math.max(0, Math.min(d, activeAudio.currentTime + sec));
+    activeAudio.currentTime = newTime;
+    updatePlaybackUI();
+  }
+
+  // --------------------------------------------------------------------------
+  // Keyboard Shortcuts (Hotkeys)
+  // - Space: Dừng / Phát tiếp
+  // - Ctrl: Phát lại từ A
+  // - Mũi tên trái (←): Lùi 5s
+  // - Mũi tên phải (→): Tiến 5s
+  // - Mũi tên lên (↑): Lấy A
+  // - Mũi tên xuống (↓): Lấy B
+  // - Phím số 0: Reset toàn bài
+  // --------------------------------------------------------------------------
+  document.addEventListener('keydown', (e) => {
+    // Không nhận phím tắt nếu panel đang ẩn (trang không có audio)
+    if (wrapper.style.display === 'none' || !activeAudio) return;
+
+    // Bỏ qua nếu người dùng đang gõ văn bản trong input / textarea
+    const target = e.target;
+    if (
+      target &&
+      (target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable ||
+        (target.getAttribute && target.getAttribute('contenteditable') === 'true'))
+    ) {
+      return;
+    }
+
+    if (e.code === 'Space' || e.key === ' ') {
+      e.preventDefault();
+      togglePlayPause();
+    } else if (e.key === 'Control') {
+      e.preventDefault();
+      triggerReplayA();
+    } else if (e.code === 'ArrowLeft' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      skipSeconds(-3);
+    } else if (e.code === 'ArrowRight' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      skipSeconds(3);
+    } else if (e.code === 'ArrowUp' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      triggerSetA();
+    } else if (e.code === 'ArrowDown' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      triggerSetB();
+    } else if (e.key === '0') {
+      e.preventDefault();
+      triggerResetAB();
+    }
   });
 
   // --------------------------------------------------------------------------
@@ -620,13 +703,15 @@
   let dockStartY = 0;
   let dockRafId = null;
 
+  let isPositionInitialized = false;
   function initDockPosition() {
-    const rect = wrapper.getBoundingClientRect();
-    currentX = Math.round(Math.max(16, (window.innerWidth - rect.width) / 2));
-    currentY = Math.round(Math.max(16, window.innerHeight - rect.height - 24));
+    if (isPositionInitialized) return;
+    const width = Math.min(880, window.innerWidth - 32);
+    currentX = Math.round(Math.max(16, (window.innerWidth - width) / 2));
+    currentY = Math.round(Math.max(16, window.innerHeight - 220));
     wrapper.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+    isPositionInitialized = true;
   }
-  setTimeout(initDockPosition, 100);
 
   dragHeader.addEventListener('mousedown', (e) => {
     if (e.target.closest('.toeic-ext-header-btn')) return;
